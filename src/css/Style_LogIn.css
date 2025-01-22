@@ -1,0 +1,77 @@
+.LogIn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    width: 410px;
+    margin: 50px auto 50px;
+    border-radius: 20px;
+}
+
+.LogIn h1{
+    margin: 20px;
+}
+
+.LogIn input{
+    margin-bottom: 20px;
+    width: 300px;
+    height: 32px;
+    border-radius: 10px;
+    padding: 0 8px;
+}
+
+.LogIn p{
+    width: 320px;
+    margin: 0 0 15px;
+}
+
+.LogIn button{
+    width: 320px;
+    height: 35px;
+    border-radius: 10px;
+    border: none;
+    margin: 7px 0 20px;
+}
+
+/* .LogIn a{
+    margin-bottom: 30px;
+} */
+
+.TypeLogIn{
+    display: flex;
+    position: relative;
+}
+
+.TypeLogIn button{
+    width: 158px;
+    border-radius: 0;
+    background-color: transparent;
+    position: relative;
+    transition: color 0.3s ease-in-out;
+}
+
+.TypeLogIn button::after{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: blue;
+    left: 0;
+    bottom: -2px;
+    opacity: 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.TypeLogIn button.active::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+.logIn_form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+

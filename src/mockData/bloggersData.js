@@ -1,0 +1,40 @@
+const bloggersData = [
+  {
+    id: 1,
+    src: "/src/assets/img/1.jpg",
+    alt: "фото профиля",
+    name: "Блогер 1",
+    description: "описание профиля",
+    category: "Лайфстал",
+    followers: 1200,
+    reach: "охваты",
+    cpv: "cpv",
+    er: "er",
+  },
+  {
+    id: 2,
+    src: "D:/ПОЛИТЕХ/ДИПЛОМ/website/src/assets/img/2.jpg",
+    alt: "фото профиля",
+    name: "Блогер 2",
+    description: "описание профиля",
+    category: "Технологии",
+    followers: 3500,
+    reach: "охваты",
+    cpv: "cpv",
+    er: "er",
+  },
+  {
+    id: 3,
+    src: "D:/ПОЛИТЕХ/ДИПЛОМ/website/src/assets/img/3.jpg",
+    alt: "фото профиля",
+    name: "Блогер 3",
+    description: "описание профиля",
+    category: "Путешествия",
+    followers: 8700,
+    reach: "охваты",
+    cpv: "cpv",
+    er: "er",
+  },
+];
+
+export default bloggersData;

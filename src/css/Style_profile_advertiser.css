@@ -1,0 +1,79 @@
+.Profile {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 50px auto;
+  background-color: #fff;
+  border-radius: 20px;
+  width: 600px;
+  align-items: center;
+}
+
+.Profile img {
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    object-fit: cover; 
+    object-position: center; 
+}
+
+.Profile p {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.ProfileSettings_top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ProfileSettings_avatar img,
+a {
+  display: block;
+  margin-bottom: 10px;
+  color: inherit; 
+  text-decoration: none;
+}
+
+.Profile_exit{
+    display: flex;
+    align-items: center;
+}
+
+.Profile_exit button {
+  width: 100px;
+  border: none;
+  border-radius: 30px;
+  height: 40px;
+}
+
+.ProfileSettings_description {
+  margin-top: 10px;
+}
+
+.ProfileSettings_description input {
+  margin-bottom: 15px;
+  height: 40px;
+  width: 450px;
+  border-radius: 10px;
+}
+
+.Profile_save {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0 10px;
+}
+
+.Profile_save button {
+  width: 160px;
+  height: 45px;
+  border-radius: 30px;
+  border: none;
+}
+
+.change-password{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}

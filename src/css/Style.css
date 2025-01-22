@@ -1,0 +1,43 @@
+button {
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+button:hover{
+  filter: brightness(0.9);
+}
+
+body {
+  margin: 10px 0px 0 0;
+  background-color: #c2cad0;
+  font-family: "Helvetica", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.button_line {
+  background-color: transparent;
+  border: 2px solid #afd275;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1,
+h2 {
+  color: black;
+  margin: 5px;
+  padding: 0;
+}
+
+p {
+  color: gray;
+  margin: 5px;
+  padding: 0;
+}
+
+ul{
+  list-style-type: none;
+}

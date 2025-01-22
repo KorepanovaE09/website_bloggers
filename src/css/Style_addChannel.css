@@ -1,0 +1,93 @@
+.modal-addChannel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top:0; 
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-addChannelContent{
+    background-color: white;
+    border-radius: 10px;
+    z-index: 1001;
+    position: relative;
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.close-modal-btn-addChannel{
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+}
+
+.close-icon{
+    width: 25px;
+    height: 25px;
+}
+
+.dropdown-network-btn{
+    width: 200px;
+    height: 40px;
+    border-radius: 30px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-list-network{
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;  
+    width: 170px;  
+    padding: 15px 15px 1px;
+}
+
+.dropdown-list-network li{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.dropdown-network-img{
+    width: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.modal-addChannel-gender-btn button{
+    width: 100px;
+    height: 30px;
+    border-radius: 30px;
+    border: none;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.modal-addChannel-gender-btn button.selected-gender{
+    background-color: aquamarine;
+}
+
+
+.save-add-channel{
+    width: 150px;
+    height: 40px;
+    border-radius: 30px;
+    border: none;
+    align-self: center;
+    margin-bottom: 10px;
+}

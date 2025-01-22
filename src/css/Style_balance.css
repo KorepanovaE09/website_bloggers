@@ -1,0 +1,34 @@
+.MyBalance_form{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    width: 400px;
+    margin: 25px auto;
+    border-radius: 20px;
+    padding: 15px;
+}
+
+.MyBalance_top{
+    display: flex;
+}
+
+.MyBalance_payment input{
+    border-radius: 10px;
+    height: 30px;
+    width: 170px;
+    /* border: none; */
+}
+
+.MyBalance_payment button{
+    border-radius: 20px;
+    height: 30px;
+    width: 170px;
+    border: none;
+}
+
+.MyBalance_payment h2,
+.MyBalance_payment input,
+.MyBalance_payment button {
+  display: block;
+  margin-bottom: 10px; 
+}

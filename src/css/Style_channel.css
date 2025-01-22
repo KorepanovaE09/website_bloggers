@@ -1,0 +1,24 @@
+/* .modal-conteiner {
+    position: relative;
+} */
+
+.plus-icon{
+    width: 20px;
+    height: 20px;
+}
+
+.open-modal-btn-addChannel {
+    height: 40px;
+    border-radius: 30px;
+    border: none;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.open-modal-btn-addChannel:hover {
+    background-color: antiquewhite;
+}
