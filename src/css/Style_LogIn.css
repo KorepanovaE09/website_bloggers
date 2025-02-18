@@ -1,15 +1,23 @@
+.LogIn-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
 .LogIn {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #fff;
   width: 410px;
-  margin: 50px auto 50px;
+  margin: 40px auto 40px;
   border-radius: 20px;
 }
 
 .LogIn h1 {
-  margin: 20px;
+  margin: 20px 0 0;
 }
 
 .LogIn input {
@@ -23,14 +31,17 @@
 .LogIn p {
   width: 320px;
   margin: 0 0 15px;
+  font-size: 12px;
+  line-height: 16.15px;
 }
 
 .LogIn button {
   width: 320px;
-  height: 35px;
+  height: 38px;
   border-radius: 10px;
   border: none;
-  margin: 7px 0 20px;
+  margin: 7px 0 15px;
+  background-color: #a5b0e6;
 }
 
 /* .LogIn a{
@@ -55,7 +66,7 @@
   position: absolute;
   width: 100%;
   height: 3px;
-  background-color: blue;
+  background-color: #e6a5d0;
   left: 0;
   bottom: -2px;
   opacity: 0;
@@ -73,4 +84,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.LogIn a {
+  color: #d567b0;
+  margin-bottom: 20px;
 }

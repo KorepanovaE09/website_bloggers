@@ -9,34 +9,36 @@ const SignUp = () => {
   });
 
   const handleChange = (e) => {
-    const {name, value} = e.target
+    const { name, value } = e.target;
     setFormData((prevData) => ({
-        ...prevData,
-        [name]: value
-    }))
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
-    <div className="SignUp">
-      <h1>Войти</h1>
-      <input
-        type="email"
-        name="email"
-        placeholder="E-mail"
-        value={formData.email}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Пароль"
-        value={formData.password}
-        onChange={handleChange}
-      />
-      <Link to="/">
-        <button>Войти</button>
-      </Link>
-      <Link to="/login">Нет аккаунта? Зарегистрироваться</Link>
+    <div className="SignUp-body">
+      <div className="SignUp">
+        <h1>Войти</h1>
+        <input
+          type="email"
+          name="email"
+          placeholder="Электронная почта"
+          value={formData.email}
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Пароль"
+          value={formData.password}
+          onChange={handleChange}
+        />
+        <Link to="/">
+          <button>Войти</button>
+        </Link>
+        <Link to="/login">Нет аккаунта? Зарегистрироваться</Link>
+      </div>
     </div>
   );
 };

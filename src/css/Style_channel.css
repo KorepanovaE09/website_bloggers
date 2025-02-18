@@ -1,6 +1,9 @@
-/* .modal-conteiner {
-    position: relative;
-} */
+.modal-conteiner-addChannel{
+    padding: 40px;
+    overflow: auto;
+    display: flex;
+    justify-content: space-between;
+}
 
 .plus-icon{
     width: 20px;
@@ -8,17 +11,14 @@
 }
 
 .open-modal-btn-addChannel {
-    height: 40px;
-    border-radius: 30px;
-    border: none;
-    width: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 30px;
+    border: none;
+    width: 175px;
+    height: 40px;
     gap: 8px;
-    transition: background-color 0.3s ease;
+    background-color: #A5B0E6;
 }
 
-.open-modal-btn-addChannel:hover {
-    background-color: antiquewhite;
-}

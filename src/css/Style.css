@@ -1,6 +1,19 @@
+@font-face {
+  font-family: "JejuMyeongjo";
+  src: url(../assets/fonts/JejuMyeongjo-Regular.ttf);
+}
+
+*{
+  font-family: 'JejuMyeongjo', sans-serif;
+  -webkit-text-stroke: 0.1px black;
+  margin: 0;
+  padding: 0;
+}
+
 button {
   cursor: pointer;
   transition: filter 0.3s ease;
+  font-size: 16px;
 }
 
 button:hover{
@@ -8,36 +21,70 @@ button:hover{
 }
 
 body {
-  margin: 10px 0px 0 0;
-  background-color: #c2cad0;
-  font-family: "Helvetica", sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(28.55deg, 
+  #76B1F7 20%,
+  #E2B6EB 66%, 
+  #E1DDB2 100%); 
+  opacity: 0.5;
+  z-index: -1; 
 }
 
 a {
   text-decoration: none;
+  font-size: 14px;
 }
 
 .button_line {
   background-color: transparent;
-  border: 2px solid #afd275;
+  border: 2px solid #e6a5b0;
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} 
 
 h1,
 h2 {
   color: black;
-  margin: 5px;
+  margin: 0px;
   padding: 0;
+  font-weight: 200;
+  font-size: 32px;
 }
 
 p {
-  color: gray;
+  color: black;
   margin: 5px;
   padding: 0;
+  font-size: 16px;
 }
 
 ul{
   list-style-type: none;
 }
+
+input::placeholder{
+  color: black;
+}
+
+input:focus{
+  border: 1px solid #e6a5b0;
+  outline: none
+}
+
+input{
+  background-color: #f3f4fc;
+  font-size: 14px;
+  border: none;
+}
+

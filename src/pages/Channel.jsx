@@ -9,7 +9,8 @@ const Channel = () => {
   const closeModal = () => setModalOpen(false);
 
   return (
-    <div className="modal-conteiner">
+    <div className="modal-conteiner-addChannel">
+      <h1>Каналы</h1>
       <button className="open-modal-btn-addChannel" onClick={openModal}>
        <svg className="plus-icon" viewBox="0 0 24 24">
         <line x1="12" y1="4" x2="12" y2="20" stroke="black" strokeWidth="1.5"/>

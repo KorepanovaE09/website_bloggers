@@ -1,34 +1,47 @@
+.SignUp-body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
 .SignUp{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     background-color: #fff;
     border-radius: 20px;
     width: 400px;
     height: 320px;
-    margin: 50px auto;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .SignUp h1{
-    margin: 30px;
+    margin: 0 30px 30px;
 }
 
 .SignUp input{
     width: 300px;
-    height: 35px;
+    height: 40px;
     border-radius: 10px;
     margin-bottom: 15px;
     padding: 0 8px;
+    /* background-color: #f3f4fc; */
+    border: none;
 }
 
 .SignUp button{
     width: 150px;
-    height: 35px;
+    height: 40px;
     border-radius: 30px;
     border: none;
+    background-color: #A5B0E6;
     /* margin: 0px 0; */
 }
 
 .SignUp a{
     margin-top: 10px;
+    color: #d567b0;
 }

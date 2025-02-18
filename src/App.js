@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Header from "./components/Header";
+import Header from "./components/Header-blogger";
 import Bloggers from "./pages/Bloggers_card";
 import BloggerDetails from "./pages/bloggerDetails";
 import Balance from "./pages/Balance";
@@ -54,7 +54,6 @@ const router = createBrowserRouter([
     path: "/signup",
     element: (
       <>
-      <Header/>
       <SignUp/>
       </>
     )
@@ -63,8 +62,16 @@ const router = createBrowserRouter([
     path: "/login",
     element: (
       <>
-      <Header/>
       <LogIn/>
+      </>
+    )
+  },
+  {
+    path: "/channel",
+    element: (
+      <>
+      <Header/>
+      <Channel/>
       </>
     )
   },

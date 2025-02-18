@@ -27,22 +27,23 @@ const LogIn = () => {
   };
 
   return (
-    <div className="LogIn">
-      <h1>Регистрация</h1>
-      <div className="TypeLogIn">
-        <button
-          className={activeButton === "advertiser" ? "active" : ""}
-          onClick={() => handleButtonClick("advertiser")}
-        >
-          Рекламодатель
-        </button>
-        <button
-          className={activeButton === "blogger" ? "active" : ""}
-          onClick={() => handleButtonClick("blogger")}
-        >
-          Блогер
-        </button>
-      </div>
+    <div className="LogIn-body">
+      <div className="LogIn">
+        <h1>Регистрация</h1>
+        <div className="TypeLogIn">
+          <button
+            className={activeButton === "advertiser" ? "active" : ""}
+            onClick={() => handleButtonClick("advertiser")}
+          >
+            Рекламодатель
+          </button>
+          <button
+            className={activeButton === "blogger" ? "active" : ""}
+            onClick={() => handleButtonClick("blogger")}
+          >
+            Блогер
+          </button>
+        </div>
         <form className="logIn_form">
           <input
             type="text"
@@ -88,12 +89,13 @@ const LogIn = () => {
           />
           <p>
             {" "}
-            Нажимая на кнопку “Зарегистрироваться”, вы соглашаетесь с
+            Нажимая на кнопку "Зарегистрироваться", вы соглашаетесь с
             Пользовательскими соглашениями и Политикой конфиденциальности
           </p>
           <button>Зарегистрироваться</button>
         </form>
         <Link to="/signup">Уже есть аккаунт? Войти</Link>
+      </div>
     </div>
   );
 };

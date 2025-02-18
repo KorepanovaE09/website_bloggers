@@ -1,0 +1,2 @@
+загрузка изображения
+https://sky.pro/wiki/javascript/kak-zagruzit-izobrazheniya-iz-papki-public-v-react-js/
