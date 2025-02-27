@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Header from "./components/Header-blogger";
-import Bloggers from "./pages/Bloggers_card";
+import Bloggers from "./pages/Bloggers";
 import BloggerDetails from "./pages/bloggerDetails";
 import Balance from "./pages/Balance";
 import Profile from "./pages/Profile_advertiser";
@@ -17,8 +17,8 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        {/* <Bloggers /> */}
-        <Channel />
+        <Bloggers />
+        {/* <Channel /> */}
       </>
     ),
     errorElement: <Error />,

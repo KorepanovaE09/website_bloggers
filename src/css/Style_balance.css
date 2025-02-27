@@ -5,17 +5,31 @@
     width: 400px;
     margin: 25px auto;
     border-radius: 20px;
-    padding: 15px;
+    padding: 20px;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 .MyBalance_top{
     display: flex;
+    justify-content: space-between;
+}
+
+.MyBalance_title{
+    margin: 0 0 25px;
+}
+
+.MyBalance_payment{
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
 }
 
 .MyBalance_payment input{
     border-radius: 10px;
     height: 30px;
     width: 170px;
+    padding: 0 10px 0;
     /* border: none; */
 }
 
@@ -24,6 +38,14 @@
     height: 30px;
     width: 170px;
     border: none;
+    align-items: center;
+
+    background-color: #fff;
+    border: 2px solid #e6a5b0;
+}
+
+.MyBalance_payment button:hover{
+    background-color: #e6a5b0;
 }
 
 .MyBalance_payment h2,

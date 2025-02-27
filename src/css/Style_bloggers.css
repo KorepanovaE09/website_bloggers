@@ -1,0 +1,23 @@
+.bloggers-page {
+  padding: 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.bloggers-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.open-modal-filter {
+  border: 2px solid #e6a5b0;
+  border-radius: 50px;
+  background-color: transparent;
+
+  width: 200px;
+  height: 35px;
+}
+
+

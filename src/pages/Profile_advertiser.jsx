@@ -1,5 +1,5 @@
 import "../css/Style_profile_advertiser.css";
-import foto from "D:\\ПОЛИТЕХ\\ДИПЛОМ\\website\\src\\assets\\img\\1.jpg";
+// import foto from "../../public/img/1.jpg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const Profile = () => {
       <div className="ProfileSettings">
         <div className="ProfileSettings_top">
           <div className="ProfileSettings_avatar">
-            <img src={img || foto} alt="avatar"></img>
+            <img src={img || "/img/1.jpg"} alt="avatar"></img>
             <a
               href="#"
               onClick={() => document.getElementById("fileInput").click()}

@@ -40,21 +40,26 @@ const AddChannel = ({ closeModal }) => {
   const socialNetwork = [
     {
       name: "Instagram",
-      img: "https://wowblogger.ru/_nuxt/img/instagram.596a637.svg",
+      src: "/img/network/instagram.jpg",
+      value: "instagram"
     },
     {
       name: "YouTube",
-      img: "https://avatars.mds.yandex.net/i?id=14833da2aec158d75423d3c736e7d0c4_l-5246466-images-thumbs&n=13",
+      src: "/img/network/youtube.jpg",
+      value: "youtube"
     },
     {
       name: "Telegram",
-      img: "https://avatars.mds.yandex.net/i?id=238d2d66c028d2b1601346e8f7341c56_l-5433869-images-thumbs&n=13",
+      src: "/img/network/telegram.jpg",
+      value: "telegram"
     },
     {
       name: "Вконтакте",
-      img: "https://avatars.mds.yandex.net/i?id=38854c1e46a1901f45b0d607643fa76d_l-4715391-images-thumbs&n=13",
+      src: "/img/network/vk.jpg",
+      value: "vk"
     },
   ];
+
   return (
     <div className="modal-addChannel" onClick={closeModal}>
       <div
@@ -63,7 +68,7 @@ const AddChannel = ({ closeModal }) => {
       >
         <h1>Расскажите о себе</h1>
 
-        <button className="close-modal-btn-addChannel" onClick={closeModal}>
+        <button className="close-modal-addChannel" onClick={closeModal}>
           <svg className="close-icon" viewBox="0 0 24 24">
             <line
               x1="4"
@@ -109,7 +114,7 @@ const AddChannel = ({ closeModal }) => {
                 <li key={index} onClick={() => handleSelectNetwork(network)}>
                   <img
                     className="dropdown-network-img"
-                    src={network.img}
+                    src={network.src}
                     alt={network.name}
                   />
                   {network.name}
@@ -117,6 +122,14 @@ const AddChannel = ({ closeModal }) => {
               ))}
             </ul>
           )}
+
+          <div className="addChannel-name">
+            <input
+              className="addChannel-name-input"
+              type="text"
+              placeholder="Название канала"
+            ></input>
+          </div>
 
           <div className="modal-addChannel-gender">
             <p> Ваш пол </p>
