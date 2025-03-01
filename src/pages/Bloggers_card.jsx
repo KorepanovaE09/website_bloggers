@@ -1,33 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import bloggersData from "../mockData/bloggersData";
 import { Link } from "react-router-dom";
 import "../css/Style_bloggers_card.css";
-import { use } from "react";
 
 const BloggersCard = () => {
   const [selectedNetwork, setSelectedNetwork] = useState({});
-  const [selectedPrice, setSelectedPrice] = useState([]);
+  const [selectedPrice, setSelectedPrice] = useState({});
+  const [analyticsData, setAnalyticsData] = useState({});
 
-  // для каждого блогера записываем первую соц сеть из списка
-  useState(() => {
+  // Инициализация первой социальной сети и данных аналитики для каждого блогера
+  useEffect(() => {
     const defaultNetwork = {};
+    const defaultAnalytics = {};
     bloggersData.forEach((blogger) => {
       const firstNetwork = Object.keys(blogger.network)[0];
       defaultNetwork[blogger.id] = firstNetwork;
+      defaultAnalytics[blogger.id] = blogger.network[firstNetwork];
     });
     setSelectedNetwork(defaultNetwork);
+    setAnalyticsData(defaultAnalytics);
   }, []);
 
   const handleNetworkSelect = (bloggerId, network) => {
     setSelectedNetwork((prev) => ({
-      // копируем все предыдущие данные, чтобы не удалить у остальных блогеров
       ...prev,
       [bloggerId]: network,
     }));
+
+    setAnalyticsData((prev) => ({
+      ...prev,
+      [bloggerId]: bloggersData.find((blogger) => blogger.id === bloggerId).network[network],
+    }));
+    
     setSelectedPrice((prev) => ({
       ...prev,
-      [bloggerId]: ""
-    }))
+      [bloggerId]: "",
+    }));
   };
 
   const handleServiceChange = (bloggerId, price) => {
@@ -41,7 +49,6 @@ const BloggersCard = () => {
     <div className="bloggers_container">
       {bloggersData.map((blogger) => (
         <div className="blogger_card" key={blogger.id}>
-          {/* Карточка блогера */}
           <Link to={`/blogger/${blogger.id}`}>
             <div className="blogger_card_head">
               <div className="blogger_card_head_user">
@@ -56,10 +63,10 @@ const BloggersCard = () => {
             <p className="blogger-card-description">{blogger.description}</p>
 
             <div className="blogger_card_analytic">
-              <p>Подписчики: {blogger.followers}</p>
-              <p>Охваты: {blogger.reach}</p>
-              <p>CPV: {blogger.cpv}</p>
-              <p>ER: {blogger.er}</p>
+              <p>Подписчики: {analyticsData[blogger.id]?.followers}</p>
+              <p>Охваты: {analyticsData[blogger.id]?.reach}</p>
+              <p>CPV: {analyticsData[blogger.id]?.cpv}</p>
+              <p>ER: {analyticsData[blogger.id]?.er}</p>
             </div>
           </Link>
 

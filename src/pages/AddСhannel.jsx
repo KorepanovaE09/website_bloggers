@@ -1,5 +1,6 @@
 import { useState } from "react";
-import CountryList from "react-select-country-list";
+import socialNetworkData from "../mockData/socialNetworkData.js";
+import categoriesData from "../mockData/categoriesData.js";
 import "../css/Style_addChannel.css";
 
 const AddChannel = ({ closeModal }) => {
@@ -36,29 +37,6 @@ const AddChannel = ({ closeModal }) => {
   const handleCityChange = (e) => {
     setSelectedCity(e.target.value);
   };
-
-  const socialNetwork = [
-    {
-      name: "Instagram",
-      src: "/img/network/instagram.jpg",
-      value: "instagram"
-    },
-    {
-      name: "YouTube",
-      src: "/img/network/youtube.jpg",
-      value: "youtube"
-    },
-    {
-      name: "Telegram",
-      src: "/img/network/telegram.jpg",
-      value: "telegram"
-    },
-    {
-      name: "Вконтакте",
-      src: "/img/network/vk.jpg",
-      value: "vk"
-    },
-  ];
 
   return (
     <div className="modal-addChannel" onClick={closeModal}>
@@ -98,7 +76,7 @@ const AddChannel = ({ closeModal }) => {
               <>
                 <img
                   className="dropdown-network-img"
-                  src={selectedNetwork.img}
+                  src={selectedNetwork.src}
                   alt={selectedNetwork.name}
                 />
                 {selectedNetwork.name}
@@ -110,7 +88,7 @@ const AddChannel = ({ closeModal }) => {
 
           {isDropdownOpen && (
             <ul className="dropdown-list-network">
-              {socialNetwork.map((network, index) => (
+              {socialNetworkData.map((network, index) => (
                 <li key={index} onClick={() => handleSelectNetwork(network)}>
                   <img
                     className="dropdown-network-img"
@@ -128,7 +106,20 @@ const AddChannel = ({ closeModal }) => {
               className="addChannel-name-input"
               type="text"
               placeholder="Название канала"
-            ></input>
+            />
+          </div>
+
+          <div className="addChannel-categoies">
+            <select>
+              <option value="" disabled selected>
+                Выберите категорию
+              </option>
+              {categoriesData.map((categories, index) => (
+                <option key={index} value={categories.name}>
+                  {categories.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="modal-addChannel-gender">

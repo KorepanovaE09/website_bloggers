@@ -72,11 +72,23 @@
 }
 
 .addChannel-name-input {
-  width: 250px;
+  width: 240px;
   height: 40px;
   /* margin-top: 20px; */
   padding: 0 10px;
   border-radius: 10px;
+}
+
+.addChannel-categoies select{
+  width: 260px;
+  height: 40px;
+  padding: 0 10px;
+  margin: 20px 0 0 ;
+
+  border-radius: 10px;
+  border: 1px solid #f6a8cd;
+  outline: none;
+
 }
 
 .modal-addChannel-gender-btn button {

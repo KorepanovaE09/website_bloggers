@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Header from "./components/Header-blogger";
 import Bloggers from "./pages/Bloggers";
-import BloggerDetails from "./pages/bloggerDetails";
+import BloggerDetails from "./pages/BloggerDetails";
 import Balance from "./pages/Balance";
 import Profile from "./pages/Profile_advertiser";
 import SignUp from "./pages/SignUp";

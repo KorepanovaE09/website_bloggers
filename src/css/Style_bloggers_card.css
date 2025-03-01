@@ -98,6 +98,10 @@
   border-radius: 50%;
 }
 
+.network-icon.active{
+  border: 3px solid #e06277;
+}
+
 .blogger-card-services{
   display: flex;
   flex-direction: column;
