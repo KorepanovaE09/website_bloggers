@@ -1,0 +1,161 @@
+.modal-filter p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .modal-filter {
+    display: flex;
+    justify-content: flex-end; /* Прижимаем  к правому краю */
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  
+  .modal-conteiner-filter {
+    background-color: white;
+    border-radius: 25px 0 0 25px;
+    width: 100%;
+    /* height: 100vh; */
+    max-width: 300px;
+    padding: 20px 40px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1001;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-filter-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .modal-filter-content input {
+    border-radius: 10px;
+    border: 1px solid #a5b0e6;
+    background-color: white;
+    padding: 0 10px;
+    height: 35px;
+    color: #333;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .modal-filter-content input:focus {
+    border-color: #e6a5b0;
+    box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
+    outline: none;
+  }
+  
+  .filter-input-name {
+    height: 35px;
+    width: 92%;
+    margin: 10px 0 0;
+  }
+  
+  .modal-filter-content select {
+    height: 35px;
+    width: 100%;
+    padding: 0 10px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid #e6a5b0;
+    outline: none;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .modal-filter-content select:focus {
+    border-color: #a5b0e6;
+    box-shadow: 0 0 5px rgba(165, 176, 230, 0.5);
+  }
+  
+  .input-conteiner-followers,
+  .input-conteiner-price {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    margin: 5px 0 10px;
+  }
+  
+  .input-filter-number {
+    width: 100px;
+  }
+  
+  .modal-filter-drop-save {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 20px 0 5px;
+  }
+  
+  .modal-filter-drop-save button {
+    width: 120px;
+    height: 35px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .filter-save {
+    border: none;
+    background-color: #a5b0e6;
+    color: #333;
+  }
+  
+  /* .filter-save:hover {
+    background-color: #8c9ad6;
+    transform: scale(1.05);
+  } */
+  
+  .filter-drop {
+    background-color: white;
+    border: 1px solid #e6a5b0;
+    color: #e6a5b0;
+  }
+  
+  /* .filter-drop:hover {
+    background-color: #f8f8f8;
+    transform: scale(1.05);
+  } */
+  
+  .filter-gender {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+    justify-content: flex-start;
+  }
+  
+  .filter-gender button {
+    width: 100px;
+    height: 30px;
+    border-radius: 25px;
+    border: none;
+    background-color: #a5b0e6;
+    color: #333;
+    font-size: 14px;
+    /* cursor: pointer; */
+  }
+  
+
+  .close-modal {
+    right: 25px;
+    background: none;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+ 

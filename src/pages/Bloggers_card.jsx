@@ -31,7 +31,7 @@ const BloggersCard = () => {
       ...prev,
       [bloggerId]: bloggersData.find((blogger) => blogger.id === bloggerId).network[network],
     }));
-    
+
     setSelectedPrice((prev) => ({
       ...prev,
       [bloggerId]: "",
@@ -55,12 +55,12 @@ const BloggersCard = () => {
                 <img src={blogger.src} alt={blogger.alt} />
               </div>
               <div className="blogger_card_head_info">
-                <h2>{blogger.name}</h2>
+                <h2>{analyticsData[blogger.id]?.name}</h2>
                 <p>{blogger.category}</p>
               </div>
             </div>
 
-            <p className="blogger-card-description">{blogger.description}</p>
+            <p className="blogger-card-description">{analyticsData[blogger.id]?.description}</p>
 
             <div className="blogger_card_analytic">
               <p>Подписчики: {analyticsData[blogger.id]?.followers}</p>
