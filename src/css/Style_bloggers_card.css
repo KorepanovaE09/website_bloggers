@@ -124,6 +124,12 @@
   border: 1px solid #e6a5b0;
 }
 
+.blogger-card-services-link{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
 .blogger-card-services-btn{
   height: 35px;
   width: 75%;
@@ -132,22 +138,8 @@
   background-color: #a5b0e6;
 }
 
-
-
-/* .blogger-card-services{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 25px;  
-} */
-
-/* .blogger-card-price-btn{
-  border-radius: 25px;
-  border: none;
-  background-color: #a5b0e6;
-  width: 150px;
-  height: 35px;
+.blogger-card-services-btn.disabled{
+  /* opacity: 0.8; */
+  cursor: not-allowed;
+  color: #000;
 }
- */
-

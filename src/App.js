@@ -1,15 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 import Header from "./components/Header-blogger";
 import Bloggers from "./pages/Bloggers";
 import BloggerDetails from "./pages/BloggerDetails";
 import Balance from "./pages/Balance";
-import Profile from "./pages/Profile_advertiser";
+import Profile from "./components/Profile_settings";
+import Profile_blogger from "./pages/Settings_blogger";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import Error from "./pages/Error";
 import Channel from "./pages/Channel";
 import AddChannel from "./pages/AddСhannel";
+import Campaigns from "./pages/Campaigns";
+import Form_order from "./pages/Form-order";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +20,6 @@ const router = createBrowserRouter([
       <>
         <Header />
         <Bloggers />
-        {/* <Channel /> */}
       </>
     ),
     errorElement: <Error />,
@@ -36,54 +37,73 @@ const router = createBrowserRouter([
     path: "/balance",
     element: (
       <>
-      <Header/>
-      <Balance/>
+        <Header />
+        <Balance />
       </>
-    )
+    ),
   },
   {
     path: "/profile",
     element: (
       <>
-      <Header/>
-      <Profile/>
+        <Header />
+        <Profile />
+        {/* <Profile_advertiser/> */}
       </>
-    )
+    ),
   },
   {
     path: "/signup",
     element: (
       <>
-      <SignUp/>
+        <SignUp />
       </>
-    )
+    ),
   },
   {
     path: "/login",
     element: (
       <>
-      <LogIn/>
+        <LogIn />
       </>
-    )
+    ),
   },
   {
     path: "/channel",
     element: (
       <>
-      <Header/>
-      <Channel/>
+        <Header />
+        <Channel />
       </>
-    )
+    ),
+  },
+  {
+    path: "/campaigns",
+    element: (
+      <>
+        <Header />
+        <Campaigns />
+      </>
+    ),
   },
   {
     path: "/addChannel",
     element: (
       <>
+        <Header />
+        <AddChannel />
+      </>
+    ),
+  },
+  {
+    path: "/form-order",
+    element: (
+      <>
       <Header/>
-      <AddChannel/>
+      <Form_order/>
       </>
     )
-  }
+  },
 ]);
 
 function App() {
