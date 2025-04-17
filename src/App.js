@@ -10,8 +10,8 @@ import LogIn from "./pages/LogIn";
 import Error from "./pages/Error";
 import Channel from "./pages/Channel";
 import AddChannel from "./pages/AddСhannel";
-import Campaigns from "./pages/Campaigns";
-import Form_order from "./pages/Form-order";
+import Orders from "./pages/Orders";
+import Form_order from "./pages/Form-new-order";
 
 const router = createBrowserRouter([
   {
@@ -78,11 +78,11 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/campaigns",
+    path: "/orders",
     element: (
       <>
         <Header />
-        <Campaigns />
+        <Orders />
       </>
     ),
   },

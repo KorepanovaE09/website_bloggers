@@ -15,20 +15,16 @@ header {
   margin-left: 40px;
 }
 
-.button_channel,
-.button_bloggers {
+.btn-header-left{
   border-radius: 50px;
-  /* width: 120px; */
   height: 45px;
-  /* background-color: rgba(255, 255, 255, 0.5); */
   background-color: transparent;
   border: none;
   margin-left: 40px;
   position: relative;
 }
 
-.button_channel::after,
-.button_bloggers::after {
+.btn-header-left::after{
   content: "";
   position: absolute;
   width: 100%;
@@ -41,22 +37,20 @@ header {
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-.button_channel:hover,
-.button_bloggers:hover {
+.btn-header-left:hover{
   filter: brightness(1);
 }
 
-.button_channel:hover::after,
-.button_bloggers:hover::after {
+.btn-header-left:hover::after,
+.btn-header-left:focus::after{
   opacity: 1;
   transform: scaleX(1);
 }
 
-.button_channel.active::after,
-.button_bloggers.active::after {
+/* .btn-header-left:hover::after{
   opacity: 1;
   transform: scaleX(1);
-}
+} */
 
 header img.img_balance {
   width: 21px;
@@ -80,11 +74,11 @@ button {
   cursor: pointer;
 }
 
-.button_profile {
+.btn-profile {
   border: none;
   background-color: #a5b0e6;
 }
 
-.button_line {
+.btn-line {
   background-color: transparent;
 }
