@@ -2,8 +2,18 @@ import "../css/Style_LogIn.css";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import InputAdornment from "@mui/material/InputAdornment";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Input from "@mui/material/Input";
+
 const LogIn = () => {
-  const [activeButton, setActiveButtom] = useState("advertiser");
+  const [activeButton, setActivebutton] = useState("advertiser");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -15,7 +25,7 @@ const LogIn = () => {
   });
 
   const handleButtonClick = (buttonType) => {
-    setActiveButtom(buttonType);
+    setActivebutton(buttonType);
   };
 
   const handleChange = (e) => {
@@ -24,6 +34,14 @@ const LogIn = () => {
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -66,27 +84,70 @@ const LogIn = () => {
             value={formData.email}
             onChange={handleChange}
           />
-          <input
+
+          <PhoneInput
+            country={"ru"}
+            value={formData.phone}
+            onChange={(phone) =>
+              setFormData((prevData) => ({
+                ...prevData,
+                phone: phone,
+              }))
+            }
+          />
+
+          {/* <input
             type="tel"
             name="phone"
             placeholder="Телефон"
             value={formData.phone}
             onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Пароль"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Повторите пароль"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
+          /> */}
+
+          <div className="password-input">
+            <Input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Пароль"
+              value={formData.password}
+              onChange={handleChange}
+              disableUnderline
+            />
+            <IconButton
+              className="password-icon"
+              onClick={handleClickShowPassword}
+              onMouseDown={handleMouseDownPassword}
+            >
+              {showPassword ? (
+                <Visibility fontSize="small" />
+              ) : (
+                <VisibilityOff fontSize="small" />
+              )}
+            </IconButton>
+          </div>
+
+          <div className="password-input">
+            <Input
+              type={showPassword ? "text" : "password"}
+              name="confirmPassword"
+              placeholder="Повторите пароль"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              disableUnderline
+            />
+            <IconButton
+              className="password-icon"
+              onClick={handleClickShowPassword}
+              onMouseDown={handleMouseDownPassword}
+            >
+              {showPassword ? (
+                <Visibility fontSize="small" />
+              ) : (
+                <VisibilityOff fontSize="small" />
+              )}
+            </IconButton>
+          </div>
+
           <p>
             {" "}
             Нажимая на кнопку "Зарегистрироваться", вы соглашаетесь с

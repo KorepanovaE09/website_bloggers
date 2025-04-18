@@ -90,3 +90,49 @@
   color: #d567b0;
   margin-bottom: 20px;
 }
+
+.LogIn .MuiIconButton-root {
+  color: #757575;
+  background-color: transparent;
+  width: 0;
+
+  position: absolute;
+  right: 20px;
+  top: 15%;
+  transform: translateY(-50%);
+  color: #757575;
+  padding: 6px;
+}
+
+.LogIn .MuiIconButton-root:hover {
+  color: #757575;
+  background-color: transparent;
+  width: 0;
+}
+
+.LogIn .react-tel-input {
+  margin-bottom: 20px;
+  width: 100%;
+  /* border: none; */
+}
+
+.LogIn .react-tel-input .form-control {
+  width: 100%;
+  height: 35px;
+  border-radius: 10px;
+  border: none;
+  background-color: #f3f4fc;
+  font-size: 14px;
+  padding-left: 48px;
+  font-size: 14px;
+}
+
+.LogIn .react-tel-input .form-control:focus{
+  border: 1px solid #e6a5b0;
+  box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
+  outline: none;
+}
+
+.LogIn .react-tel-input .country-list  {
+  width: 316px;
+}
