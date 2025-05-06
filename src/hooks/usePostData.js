@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-const usePostData = () => {
+const usePostData = (useAuth = false) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [responseData, setResponseData] = useState(null);
@@ -14,12 +14,25 @@ const usePostData = () => {
     setResponseData(null);
 
     try {
-      const response = await axios.post(`${API_URL}${endpoint}`, payload, {
+      const config = {
         headers: {
           "Content-Type": "application/json",
         },
-        withCredentials: false, // true, если используем куки
-      });
+        withCredentials: false,
+      };
+
+      if (useAuth) {
+        const token = localStorage.getItem("token")?.trim();;
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      }
+
+      const response = await axios.post(
+        `${API_URL}${endpoint}`,
+        payload,
+        config
+      );
 
       setResponseData(response.data);
       return response.data;

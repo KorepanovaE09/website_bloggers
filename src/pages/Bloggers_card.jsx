@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
-import bloggersData from "../mockData/bloggersData";
 import { Link, replace, useNavigate } from "react-router-dom";
 import "../css/Style_bloggers_card.css";
-import useData from "../hooks/useData";
-// import Loader from "../components/Loader";
-import HOK_Loader from "../components/HOK_Loader";
 import Loader from "../components/Loader";
 
 const BloggersCard = ({ bloggers }) => {
@@ -32,6 +28,7 @@ const BloggersCard = ({ bloggers }) => {
           [blogger.id]: {
             service: firstService,
             price: firstService.price,
+            id: firstService.id
           },
         }));
       }
@@ -61,6 +58,7 @@ const BloggersCard = ({ bloggers }) => {
         [bloggerId]: {
           service: firstService,
           price: firstService.price,
+          id: firstService.id
         },
       }));
     }
@@ -142,7 +140,7 @@ const BloggersCard = ({ bloggers }) => {
             <Link
               to={`/form-order?price=${selectedService[blogger.id]?.price}&bloggerId=${
                 blogger.id
-              }&service=${selectedService[blogger.id]?.service}`}
+              }&service=${selectedService[blogger.id]?.id}`}
               className="blogger-card-services-link"
               onClick={(e) => {
                 if (!token) {
