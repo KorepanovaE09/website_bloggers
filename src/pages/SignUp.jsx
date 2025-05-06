@@ -79,7 +79,7 @@ const SignUp = () => {
         user_password: formData.password,
       });
 
-      localStorage.setItem("token", response.token);
+      localStorage.setItem("token", response.refreshToken);
       navigate("/");
     } catch (err) {
       console.error("Ошибка при входе:", error);
