@@ -14,8 +14,12 @@ const Balance = () => {
       </div>
       <div className="MyBalance_payment">
         {/* <h2> Введите сумму </h2> */}
-        <input type="text" className="MyBalancePayment_input" placeholder="Введите сумму"></input>
-        <button className="MyBalancePayment_button">Пополнить баланс</button>
+        <input
+          type="text"
+          className="MyBalancePayment_input"
+          placeholder="Введите сумму"
+        ></input>
+        <button className="MyBalancePaymentbtn">Пополнить баланс</button>
       </div>
     </div>
   );

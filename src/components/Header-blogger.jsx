@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const Header = () => {
   const location = useLocation();
+  const token = localStorage.getItem("token");
 
   return (
     <header>
@@ -24,36 +25,49 @@ const Header = () => {
           </button>
         </Link>
 
-        <Link to="/channel">
-          <button
-            className={`btn-header-left ${
-              location.pathname === "/channel" ? "active" : ""
-            }`}
-          >
-            МОИ КАНАЛЫ
-          </button>
-        </Link>
+        {token && (
+          <>
+            <Link to="/channel">
+              <button
+                className={`btn-header-left ${
+                  location.pathname === "/channel" ? "active" : ""
+                }`}
+              >
+                МОИ КАНАЛЫ
+              </button>
+            </Link>
 
-        <Link to="/orders">
-          <button
-            className={`btn-header-left ${
-              location.pathname === "/orders" ? "active" : ""
-            }`}
-          >
-            ЗАКАЗЫ
-          </button>
-        </Link>
+            <Link to="/orders">
+              <button
+                className={`btn-header-left ${
+                  location.pathname === "/orders" ? "active" : ""
+                }`}
+              >
+                ЗАКАЗЫ
+              </button>
+            </Link>
+          </>
+        )}
       </div>
 
       <div className="header_right">
-        <Link to="/balance">
-          <button className="btn-line">
-            <img className="img_balance" src={walletIcon} alt="Кошелек" />
-            Баланс
-          </button>
-        </Link>
+        {token ? (
+          <Link to="/balance">
+            <button className="btn-line">
+              <img className="img_balance" src={walletIcon} alt="Кошелек" />
+              Баланс
+            </button>
+          </Link>
+        ) : (
+          <Link to="/auth/login">
+            <button className="btn-line">Создать аккаунт</button>
+          </Link>
+        )}
         <Link to="/profile">
-          <button className="btn-profile">Имя пользователя</button>
+          <button className="btn-profile">
+            {" "}
+            {token ? "Имя пользователя" : "Войти"}
+          </button>
         </Link>
       </div>
     </header>

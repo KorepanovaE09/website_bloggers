@@ -53,7 +53,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/signup",
+    path: "/auth/signup",
     element: (
       <>
         <SignUp />
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/login",
+    path: "/auth/login",
     element: (
       <>
         <LogIn />
@@ -99,10 +99,10 @@ const router = createBrowserRouter([
     path: "/form-order",
     element: (
       <>
-      <Header/>
-      <Form_order/>
+        <Header />
+        <Form_order />
       </>
-    )
+    ),
   },
 ]);
 

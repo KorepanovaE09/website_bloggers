@@ -11,7 +11,7 @@
   z-index: 1000;
 }
 
-.modal-addChannelContent {
+.modal-conteiner-addChannel {
   background-color: white;
   border-radius: 10px;
   z-index: 1001;
@@ -21,11 +21,17 @@
   width: 100%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 }
 
-.close-modal-addChannel {
+.dropdown-network-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.close-modal {
   background-color: transparent;
   border: none;
   position: absolute;
@@ -37,6 +43,91 @@
   width: 25px;
   height: 25px;
 }
+
+.dropdown-network button {
+  border: none;
+  border-radius: 25px;
+  height: 35px;
+  width: 180px;
+  background-color: #a5b0e6;
+
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-list-network {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  width: 170px;
+  padding: 15px 15px 1px;
+  margin-top: 15px;
+  /* margin-bottom: 20px; */
+}
+
+.dropdown-network-img {
+  width: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.dropdown-list-network li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.addChannel-name {
+  display: flex;
+  gap: 15px;
+  /* margin: 15px 0; */
+}
+
+.addChannel-name input {
+  width: 85%;
+  height: 35px;
+  border-radius: 10px;
+  padding: 0 10px;
+}
+
+.addChannel-descroption textarea {
+  width: 96%;
+  height: 70px;
+  border-radius: 10px;
+  border: 1px solid #a5b0e6;
+  outline: none;
+  padding: 10px;
+  /* margin-bottom: 15px; */
+}
+
+.addChannel-descroption textarea:focus {
+  border: 1px solid #e6a5b0;
+  box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
+}
+
+.save-add-channel {
+  border-radius: 25px;
+  background-color: #a5b0e6;
+  border: none;
+  width: 30%;
+  height: 35px;
+}
+
+.addChannel-save {
+  display: flex;
+  justify-content: center;
+}
+
+/*
+
+
+
+
 
 .dropdown-network-btn {
   width: 200px;
@@ -71,24 +162,32 @@
   margin-right: 10px;
 }
 
-.addChannel-name-input {
+.addChannel-name input {
   width: 240px;
   height: 40px;
   /* margin-top: 20px; */
-  padding: 0 10px;
+/* padding: 0 10px;
   border-radius: 10px;
 }
 
-.addChannel-categoies select{
+.addChannel-descroption input {
+  width: 86%;
+  height: 150px;
+
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: start;
+}
+
+.addChannel-categoies select {
   width: 260px;
   height: 40px;
   padding: 0 10px;
-  margin: 20px 0 0 ;
+  margin: 20px 0 0;
 
   border-radius: 10px;
   border: 1px solid #f6a8cd;
   outline: none;
-
 }
 
 .modal-addChannel-gender-btn button {
@@ -138,7 +237,7 @@
   gap: 30px;
 }
 
-.modal-addChannel button:not(.save-add-channel, .close-modal-addChannel):hover {
+.modal-addChannel button:not(.save-add-channel, .close-modal):hover {
   background-color: #f6a8cd;
   border: 1px solid #f6a8cd;
-}
+} */

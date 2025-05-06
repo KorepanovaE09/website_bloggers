@@ -1,7 +1,90 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../css/Style_bloggers_filter.css";
+import useData from "../hooks/useData";
+import usePostData from "../hooks/usePostData";
+import categoriesData from "../mockData/categoriesData";
+import countryCityData from "../mockData/countryCityData";
+import Loader from "../components/Loader";
+import newStyled from "@emotion/styled";
 
-const BloggerFilter = ({ closeModal }) => {
+localStorage.removeItem("bloggerFilters");
+
+const BloggerFilter = ({ closeModal, updateFilter }) => {
+  const { data: dataLocation } = useData("/data/locations", false);
+  const { data: dataCategories } = useData("/data/categories", false);
+  const { data: dataNetwork } = useData("/data/networks", false);
+  const { postData, postError, postIsLoading } = usePostData();
+
+  const [formData, setFormData] = useState(() => {
+    const savedFilters = localStorage.getItem("bloggerFilters");
+    return savedFilters
+      ? JSON.parse(savedFilters)
+      : {
+          name: "",
+          categories: "",
+          network: "",
+          gender: "",
+          country: "",
+          city: "",
+          start_followers: "",
+          end_followers: "",
+          start_price: "",
+          end_price: "",
+        };
+  });
+
+  useEffect(() => {
+    localStorage.setItem("bloggerFilters", JSON.stringify(formData));
+  }, [formData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleClear = () => {
+    const clearedData = {
+      name: "",
+      categories: "",
+      network: "",
+      gender: "",
+      country: "",
+      city: "",
+      start_followers: "",
+      end_followers: "",
+      start_price: "",
+      end_price: "",
+    };
+
+    setFormData(clearedData);
+    localStorage.setItem("bloggerFilters", JSON.stringify(clearedData));
+    handleSaveСhange({});
+  };
+
+  const handleSaveСhange = async (dataToSend) => {
+    const filteredData = Object.fromEntries(
+      Object.entries(dataToSend).filter(([key, value]) => value !== "")
+    );
+
+    closeModal();
+    try {
+      const response = await postData("/bloggers/filter", filteredData);
+      console.log("Ответ после postData:", response);
+      if (response.bloggers) {
+        updateFilter(response.bloggers);
+      }
+    } catch (err) {
+      console.log("Ошибка при фильтрации", err);
+    }
+  };
+
+  // if (isFiltering) {
+  //   return <Loader/>
+  // }
+
   return (
     <div className="modal-filter" onClick={closeModal}>
       <div
@@ -31,43 +114,155 @@ const BloggerFilter = ({ closeModal }) => {
         </button>
 
         <div className="modal-filter-content">
-            <input className="filter-input-name" placeholder="Поиск по имени"></input>
-            <select>
-                <option value="" disabled selected>Выбрать категорию</option>
-            </select>
-            <select>
-                <option disabled selected>Выбрать соцсеть</option>
-            </select>
+          <input
+            className="filter-input-name"
+            placeholder="Поиск по имени"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          ></input>
+          <p>Категория</p>
+          <select
+            name="categories"
+            value={formData.categories}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Выбрать категорию
+            </option>
+            {(dataCategories?.categories || []).map((categorie) => (
+              <option
+                key={categorie.contentcategory_id}
+                value={categorie.category_name}
+              >
+                {categorie.category_name}
+              </option>
+            ))}
+          </select>
+          <p>Социальная сеть</p>
+          <select
+            name="network"
+            value={formData.network}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Выбрать соцсеть
+            </option>
+            {(dataNetwork?.networks || []).map((network) => (
+              <option
+                key={network.socialplatform_id}
+                value={network.socialplatform_name}
+              >
+                {network.socialplatform_name}
+              </option>
+            ))}
+          </select>
 
-            <p>Пол блогера</p>
-            <div className="filter-gender">
-                <button>Мужской</button>
-                <button>Женский</button>
-            </div>
+          {/* <p>Пол блогера</p>
+          <div className="filter-gender">
+            <button
+              className={formData.gender === "Мужской" ? "active" : ""}
+              onClick={() =>
+                setFormData((prev) => ({ ...prev, gender: "Мужской" }))
+              }
+            >
+              Мужской
+            </button>
+            <button
+              className={formData.gender === "Женский" ? "active" : ""}
+              onClick={() =>
+                setFormData((prev) => ({ ...prev, gender: "Женский" }))
+              }
+            >
+              Женский
+            </button>
+          </div> */}
 
-            <select>
-                <option disabled selected>Страна блогера</option>
-            </select>
-            <select>
-                <option disabled selected>Город блогера</option>
-            </select>
+          <p>Страна</p>
+          <select
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Страна блогера
+            </option>
+            {Object.keys(dataLocation?.locations || countryCityData).map(
+              (country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              )
+            )}
+          </select>
+          <p>Город</p>
+          <select name="city" value={formData.city} onChange={handleChange}>
+            <option value="" disabled>
+              Выберите город
+            </option>
+            {formData.country &&
+              (
+                dataLocation?.locations?.[formData.country] ||
+                countryCityData[formData.country] ||
+                []
+              ).map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+          </select>
 
-            <p>Количество подписчиков</p>
-            <div className="input-conteiner-followers">
-                <input className="input-filter-number" placeholder="От"></input>
-                <input className="input-filter-number" placeholder="До"></input>
-            </div>
+          <p>Количество подписчиков</p>
+          <div className="input-conteiner-followers">
+            <input
+              type="number"
+              className="input-filter-number"
+              name="start_followers"
+              placeholder="От"
+              value={formData.start_followers}
+              onChange={handleChange}
+            ></input>
+            <input
+              type="number"
+              className="input-filter-number"
+              name="end_followers"
+              placeholder="До"
+              value={formData.end_followers}
+              onChange={handleChange}
+            ></input>
+          </div>
 
-            <p>Цена за размещение</p>
-            <div className="input-conteiner-price">
-                <input className="input-filter-number" placeholder="От"></input>
-                <input className="input-filter-number" placeholder="До"></input>
-            </div>
+          <p>Цена за размещение</p>
+          <div className="input-conteiner-price">
+            <input
+              type="number"
+              className="input-filter-number"
+              name="start_price"
+              value={formData.start_price}
+              placeholder="От"
+              onChange={handleChange}
+            ></input>
+            <input
+              type="number"
+              className="input-filter-number"
+              name="end_price"
+              value={formData.end_price}
+              placeholder="До"
+              onChange={handleChange}
+            ></input>
+          </div>
         </div>
 
         <div className="modal-filter-drop-save">
-            <button className="filter-drop">Сбросить</button>
-            <button className="filter-save">Сохранить</button>
+          <button className="filter-drop" onClick={() => handleClear()}>
+            Сбросить
+          </button>
+          <button
+            className="filter-save"
+            onClick={() => handleSaveСhange(formData)}
+          >
+            Сохранить
+          </button>
         </div>
       </div>
     </div>

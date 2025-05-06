@@ -2,28 +2,46 @@ import Bloggers_card from "./Bloggers_card";
 import "../css/Style_bloggers.css";
 import { useEffect, useState } from "react";
 import BloggerFilter from "./BloggersFilter";
+import useData from "../hooks/useData";
+import { use } from "react";
+import Loader from "../components/Loader";
 
 const Bloggers = () => {
-  useEffect(() => {
-    document.body.style.overflow = "auto";
-    return () => {
-      // document.body.style.overflow = "hidden";
-    };
-  }, []);
+  const { data: initialData, isLoading, isError } = useData("/bloggers", false);
+  const [data, setData] = useState(null);
+  const [isFiltering, setIsFiltering] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
 
-  const [modalOpen, setModalOpen] = useState(false)
-  const openModal = () => setModalOpen(true)
-  const closeModal = () => setModalOpen(false)
+  useEffect(() => {
+    // document.body.style.overflow = "auto";
+    if (initialData) {
+      setData(initialData);
+    }
+  }, [initialData]);
+
+  const handleUpdateFilter = (filterData) => {
+    // setIsFiltering(true);
+    setData(filterData);
+  };
 
   return (
     <div className="bloggers-page">
       <div className="bloggers-header">
         <h1>Блогеры</h1>
-        <button className="open-modal-filter" onClick={openModal}>Применить фильтр</button>
+        <button className="open-modal-filter" onClick={openModal}>
+          Применить фильтр
+        </button>
       </div>
 
-      {modalOpen && <BloggerFilter closeModal={closeModal} />}
-      <Bloggers_card />
+      {modalOpen && (
+        <BloggerFilter
+          closeModal={closeModal}
+          updateFilter={handleUpdateFilter}
+        />
+      )}
+      <Bloggers_card bloggers={data} />
     </div>
   );
 };

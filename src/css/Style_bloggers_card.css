@@ -96,6 +96,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .network-icon.active{
@@ -139,7 +140,6 @@
 }
 
 .blogger-card-services-btn.disabled{
-  /* opacity: 0.8; */
   cursor: not-allowed;
   color: #000;
 }

@@ -16,19 +16,29 @@
   border-radius: 20px;
 }
 
+.LogIn select {
+  width: 316px;
+  height: 32px;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+}
+
 .LogIn h1 {
   margin: 20px 0 0;
 }
 
 .LogIn input {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   width: 300px;
   height: 32px;
   border-radius: 10px;
   padding: 0 8px;
+
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
 }
 
-.LogIn p {
+.logIn-text {
   width: 320px;
   margin: 0 0 15px;
   font-size: 12px;
@@ -43,10 +53,6 @@
   margin: 7px 0 15px;
   background-color: #a5b0e6;
 }
-
-/* .LogIn a{
-    margin-bottom: 30px;
-} */
 
 .TypeLogIn {
   display: flex;
@@ -84,6 +90,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 15px;
 }
 
 .LogIn a {
@@ -97,8 +104,8 @@
   width: 0;
 
   position: absolute;
-  right: 20px;
-  top: 15%;
+  right: 10px;
+  top: 22%;
   transform: translateY(-50%);
   color: #757575;
   padding: 6px;
@@ -110,14 +117,8 @@
   width: 0;
 }
 
-.LogIn .react-tel-input {
-  margin-bottom: 20px;
-  width: 100%;
-  /* border: none; */
-}
-
 .LogIn .react-tel-input .form-control {
-  width: 100%;
+  width: 316px;
   height: 35px;
   border-radius: 10px;
   border: none;
@@ -127,12 +128,22 @@
   font-size: 14px;
 }
 
-.LogIn .react-tel-input .form-control:focus{
+.LogIn .react-tel-input .form-control:focus {
   border: 1px solid #e6a5b0;
   box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
   outline: none;
 }
 
-.LogIn .react-tel-input .country-list  {
+.LogIn .react-tel-input .form-control.error {
+  border: 1px solid #e6a5b0;
+  box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
+  outline: none;
+}
+
+.LogIn .react-tel-input .country-list {
   width: 316px;
+}
+
+.input-errors-group {
+  width: 100%;
 }

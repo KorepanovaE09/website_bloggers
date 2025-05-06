@@ -1,6 +1,7 @@
 .orders-container {
   display: flex;
   height: 100vh;
+  overflow: hidden;
 }
 
 .list-order {
@@ -30,7 +31,6 @@
   white-space: nowrap;
   overflow: hidden;
 }
-
 
 .btn-select-order:hover {
   border-color: #8a9cff;
@@ -64,46 +64,81 @@
   box-sizing: border-box;
 }
 
-.select-order-header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.select-order-user{
-    display: flex;
-    align-items: center;
-}
-
-.select-order-type{
-    height: 45px;
-    border: 1px solid #a5b0e6;
-    width: 200px;
-}
-
-.select-order-status-input{
-    height: 45px;
-    border: 1px solid #a5b0e6;
-    width: 170px;
-}
-
-.select-order-date p{
-    font-size: 15px;
-}
-
-.select-order-right{
+/* .select-order-header-btn {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    margin-bottom: 20px;
+} */
+
+/* .select-order-header-btn button{
+    height: 45px;
+    border: 1px solid #a5b0e6;
+    box-shadow: 0 0 5px rgba(165, 176, 230, 0.5);
+    border-radius: 50px;
+    background-color: transparent;
+    padding: 15px;
+    font-size: 13px;
+}*/
+
+.select-order-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.select-order-user {
+  display: flex;
+  align-items: center;
+}
+
+.select-order-type {
+  height: 45px;
+  border: 1px solid #a5b0e6;
+  width: 200px;
+}
+
+/* .select-order-status-input {
+  height: 45px;
+  border: 1px solid #a5b0e6;
+  background-color: transparent;
+  width: 170px;
+  align-items: end;
+} */
+
+.select-order-status p {
+  color: #333;
+  font-size: 15px;
+}
+
+.select-order-date p {
+  font-size: 15px;
+}
+
+.select-order-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .select-order-name {
   height: 45px;
   width: 40%;
+  background-color: #fff;
+  border: 1px solid #a5b0e6;
+}
+
+.select-order-name:disabled {
+  background-color: #f3f4fc;
 }
 
 .select-order-date input {
   height: 45px;
+  background-color: #fff;
+  border: 1px solid #a5b0e6;
+}
+
+.select-order-date input:disabled {
+  background-color: #f3f4fc;
 }
 
 .save-select-order {
@@ -112,14 +147,71 @@
 }
 
 .save-select-order-btn {
-  background-color: #a5b0e6;
+  background-color: transparent;
   height: 40px;
   width: 150px;
   border-radius: 25px;
-  border: none;
+  border: 1px solid #a5b0e6;
+  box-shadow: 0 0 8px rgba(165, 176, 230, 0.6);
+  font-size: 15px;
 }
 
-.selected-order-description{
-    height: 250px;
+.selected-order-description {
+  height: 250px;
 }
 
+.selected-order-description:disabled {
+  background-color: #f3f4fc;
+}
+
+.selected-order-blg-comments {
+  height: 100px;
+}
+
+.selected-order-blg-comments:disabled {
+  background-color: #f3f4fc;
+}
+
+.select-order-bottom-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .select-order-deleet {
+  display: flex;
+  gap: 15px;
+}
+
+.select-order-deleet button {
+  height: 45px;
+  border: 1px solid #e6a5b0;
+  box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
+  border-radius: 50px;
+  background-color: transparent;
+  padding: 15px;
+  font-size: 15px;
+} */
+
+.select-order-actions {
+  display: flex;
+  gap: 15px;
+  box-sizing: border-box;
+}
+
+.select-order-actions button {
+  height: 40px;
+  border-radius: 50px;
+  background-color: transparent;
+  padding: 0 15px;
+  font-size: 15px;
+}
+
+.green-btn {
+  border: 1px solid #54e6d9;
+  box-shadow: 0 0 8px rgba(135, 240, 230, 0.6); /* #87f0e6 в rgba */
+}
+
+.red-btn {
+  border: 1px solid #e6a5b0;
+  box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
+}

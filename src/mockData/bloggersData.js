@@ -3,7 +3,7 @@ const bloggersData = [
     id: 1,
     src: "/img/3.jpg",
     alt: "фото профиля",
-    category: "Путешествия",
+    category: "История",
     network: {
       instagram: {
         icon: "/icons/instagram.png",
