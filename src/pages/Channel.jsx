@@ -25,21 +25,33 @@ const Channel = () => {
     }
   }, [navigate]);
 
-  const handlePriceChange = (channelId, serviceId, value) => {
+  const handleStatusPriceChange = (channelId, serviceId, value, field) => {
     setChannels((prevChannels) =>
       prevChannels.map((channel) =>
         channel.id === channelId
           ? {
               ...channel,
-              services: channel.services.map((service) =>
-                service.id === serviceId
-                  ? { ...service, price: value }
-                  : service
-              ),
+              services: channel.services.map((service) => {
+                if (service.id != serviceId) return service;
+                if (field === "status") {
+                  return {
+                    ...service,
+                    status: service.status === "active" ? "unactive" : "active",
+                  };
+                }
+                if (field === "price") {
+                  return {
+                    ...service,
+                    price: value,
+                  };
+                }
+                return service
+              }),
             }
           : channel
       )
     );
+    console.log(channels);
   };
 
   const handleChange = (channelId, field, value) => {
@@ -58,9 +70,9 @@ const Channel = () => {
     }
   };
 
-  if (!data) {
-    return <Loader />;
-  }
+  // if (!data || isLoading) {
+  //   return <Loader />;
+  // }
 
   return (
     <div className="my-channels-conteiner">
@@ -127,7 +139,18 @@ const Channel = () => {
                 {channel.services.map((service) => (
                   <li key={service.id} className="services-item">
                     <label className="services-label">
-                      <input type="checkbox" />
+                      <input
+                        type="checkbox"
+                        checked={service.status === "active"}
+                        onChange={(e) =>
+                          handleStatusPriceChange(
+                            channel.id,
+                            service.id,
+                            e.target.value,
+                            "status"
+                          )
+                        }
+                      />
                       {service.name}
                     </label>
                     <div className="services-price">
@@ -136,10 +159,11 @@ const Channel = () => {
                         placeholder="Цена"
                         value={service.price}
                         onChange={(e) =>
-                          handlePriceChange(
+                          handleStatusPriceChange(
                             channel.id,
                             service.id,
-                            e.target.value
+                            e.target.value,
+                            "price"
                           )
                         }
                         min="0"

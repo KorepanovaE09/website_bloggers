@@ -5,8 +5,8 @@ const channelsData = [
     channelName: "Канал 1",
     description: "Описание канала 1",
     services: [
-      { id: 1, name: "Услуга 1", price: 100 },
-      { id: 2, name: "Услуга 2", price: 200 },
+      { id: 1, name: "Услуга 1", price: 100, status: "active" },
+      { id: 2, name: "Услуга 2", price: 200, status: "unActive" },
     ],
   },
   {
@@ -15,30 +15,30 @@ const channelsData = [
     channelName: "Канал 2",
     description: "Описание канала 2",
     services: [
-      { id: 1, name: "Услуга 1", price: 150 },
-      { id: 2, name: "Услуга 2", price: 250 },
+      { id: 1, name: "Услуга 1", price: 150, status: "active" },
+      { id: 2, name: "Услуга 2", price: 250, status: "active" },
     ],
   },
-  {
-    id: 3,
-    networkIcon: "/img/network/instagram.jpg",
-    channelName: "Канал 2",
-    description: "Описание канала 2",
-    services: [
-      { id: 1, name: "Услуга 1", price: 150 },
-      { id: 2, name: "Услуга 2", price: 250 },
-    ],
-  },
-  {
-    id: 4,
-    networkIcon: "/img/network/instagram.jpg",
-    channelName: "Канал 2",
-    description: "Описание канала 2",
-    services: [
-      { id: 1, name: "Услуга 1", price: 150 },
-      { id: 2, name: "Услуга 2", price: 250 },
-    ],
-  },
+  // {
+  //   id: 3,
+  //   networkIcon: "/img/network/instagram.jpg",
+  //   channelName: "Канал 2",
+  //   description: "Описание канала 2",
+  //   services: [
+  //     { id: 1, name: "Услуга 1", price: 150 },
+  //     { id: 2, name: "Услуга 2", price: 250 },
+  //   ],
+  // },
+  // {
+  //   id: 4,
+  //   networkIcon: "/img/network/instagram.jpg",
+  //   channelName: "Канал 2",
+  //   description: "Описание канала 2",
+  //   services: [
+  //     { id: 1, name: "Услуга 1", price: 150 },
+  //     { id: 2, name: "Услуга 2", price: 250 },
+  //   ],
+  // },
 ];
 
 export default channelsData;
