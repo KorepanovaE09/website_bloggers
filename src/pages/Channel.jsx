@@ -11,19 +11,25 @@ const Channel = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [modalOpen, setModalOpen] = useState(false);
-  const [channels, setChannels] = useState(channelsData);
-  const { data, isLoading, isError, error } = useData("/my-channels", true);
+  const { data, isLoading, isError, error } = useData("/channels");
+  const [channels, setChannels] = useState();
   const { postData, postIsLoading, postError } = usePostData();
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate("/auth/signup", { replace: true });
+  //     return;
+  //   }
+  // }, [navigate]);
+
   useEffect(() => {
-    if (!token) {
-      navigate("/auth/signup", { replace: true });
-      return;
+    if (data) {
+      setChannels(data);
     }
-  }, [navigate]);
+  }, [data]);
 
   const handleStatusPriceChange = (channelId, serviceId, value, field) => {
     setChannels((prevChannels) =>
@@ -51,7 +57,6 @@ const Channel = () => {
           : channel
       )
     );
-    console.log(channels);
   };
 
   const handleChange = (channelId, field, value) => {
@@ -64,15 +69,15 @@ const Channel = () => {
 
   const handleSaveChange = async () => {
     try {
-      await postData("save-channel", { token, ...channels });
+      await postData("save-channel", { ...channels });
     } catch (err) {
       console.log("Ошибка при сохранеии данных", err);
     }
   };
 
-  // if (!data || isLoading) {
-  //   return <Loader />;
-  // }
+  if (!data || isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="my-channels-conteiner">
@@ -104,13 +109,13 @@ const Channel = () => {
       </div>
 
       <div className="my-channels-conteiner-grid">
-        {(data || channels).map((channel) => (
+        {channels?.map((channel) => (
           <div className="my-channel-content">
             <div className="my-channel-header">
               <img
                 className="network-icon"
-                src={channel.networkIcon}
-                alt=""
+                src={`/img/network/${channel.network}.jpg`}
+                alt={channel.network}
               ></img>
               {/* <a key="" href="#" target="_blank" rel="noopener noreferrer">
                 Название канала

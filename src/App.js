@@ -12,6 +12,7 @@ import Channel from "./pages/Channel";
 import AddChannel from "./pages/AddСhannel";
 import Orders from "./pages/Orders";
 import Form_order from "./pages/Form-new-order";
+import ChangePassword from "./pages/ChangePassword";
 
 const router = createBrowserRouter([
   {
@@ -104,6 +105,15 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: "/change-password",
+    element: (
+      <>
+      <Header/>
+      <ChangePassword/>
+      </>
+    )
+  }
 ]);
 
 function App() {

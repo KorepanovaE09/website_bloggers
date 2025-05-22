@@ -9,7 +9,7 @@ import { useConfirmModal } from "../context/ConfirmModalContext";
 import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
-  const userType = "blogger";
+  const userType = "advertiser";
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const isBlogger = userType === "blogger";
@@ -17,8 +17,8 @@ const Orders = () => {
 
   const { showConfirmModal } = useConfirmModal();
   const { postData, postIsLoading, PostError } = usePostData();
-  const { data, isLoading, isError, error } = useData("/oders", token);
-  const [orders, setOrders] = useState(ordersData);
+  const { data, isLoading, isError, error, refetch } = useData("/orders");
+  const [orders, setOrders] = useState([]);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
   const today = new Date().toISOString().split("T")[0];
 
@@ -30,12 +30,12 @@ const Orders = () => {
       });
       return;
     }
-    if (data){
-      setOrders(data)
+    if (data) {
+      setOrders(data);
     }
   }, [navigate, data]);
 
-  const selectedOrder = (data || orders).find(
+  const selectedOrder = (orders || []).find(
     (order) => order.id === selectedOrderId
   );
 
@@ -49,22 +49,21 @@ const Orders = () => {
 
   const handleSaveChange = async (orderId) => {
     try {
-      const orderToSave = (data || orders).find(
-        (order) => order.id === orderId
-      );
-      await postData("/save-change-order", orderToSave);
+      const orderToSave = (orders || []).find((order) => order.id === orderId);
+      await postData("/orders/edit-order", orderToSave);
+      await refetch();
     } catch (err) {
       console.log("Ошибка сохранения", err);
     }
   };
 
-  const handleModalSaveChange = (orderId) => {
-    showConfirmModal({
-      title: "Отправка заказа",
-      message: "Сохранить изменения?",
-      onConfirm: () => handleSaveChange(orderId),
-    });
-  };
+  // const handleModalSaveChange = (orderId) => {
+  //   showConfirmModal({
+  //     title: "Отправка заказа",
+  //     message: "Сохранить изменения?",
+  //     onConfirm: () => handleSaveChange(orderId),
+  //   });
+  // };
 
   const handleDelete = async (orderId) => {
     setOrders((prev) => prev.filter((order) => order.id !== orderId));
@@ -85,31 +84,40 @@ const Orders = () => {
     });
   };
 
-  const handleChangeStatus = async (orderId, status) => {
-    try {
-      const responce = await postData("status-order", {
-        order_id: orderId,
-        order_status: status,
-      });
-      const updateOrder = responce.data;
+  // const handleChangeStatus = async (orderId, status) => {
+  //   try {
+  //     const responce = await postData("orders/", {
+  //       order_id: orderId,
+  //       order_status: status,
+  //     });
+  //     const updateOrder = responce.data;
 
-      setOrders((prev) =>
-        prev.map((order) =>
-          order.id === updateOrder.id
-            ? { ...order, status: updateOrder.status }
-            : order
-        )
-      );
-    } catch (err) {
-      console.log("Ошибка подтверждения заказа", err);
-    }
-  };
+  //     setOrders((prev) =>
+  //       prev.map((order) =>
+  //         order.id === updateOrder.id
+  //           ? { ...order, status: updateOrder.status }
+  //           : order
+  //       )
+  //     );
+  //   } catch (err) {
+  //     console.log("Ошибка подтверждения заказа", err);
+  //   }
+  // };
 
-  const handleModalChangeStatus = (orderId, status) => {
+  const handleModalChangeStatus = (orderId, field, value) => {
     showConfirmModal({
       title: "Подтверждение заказа",
       message: "Вы уверены, что хотите подтвердить выполнение заказа",
-      onConfirm: () => handleChangeStatus(orderId, status),
+      onConfirm: () => {
+        const updatedOrders = orders.map((order) =>
+          order.id === orderId ? { ...order, [field]: value } : order
+        );
+        const updatedOrder = updatedOrders.find((order) => order.id === orderId);
+        setOrders(updatedOrders);
+        postData("/orders/edit-order", updatedOrder).then(() => {
+          refetch();
+        });
+      },
     });
   };
 
@@ -119,14 +127,14 @@ const Orders = () => {
     );
   };
 
-  // if (!data) {
-  //   return <Loader/>
-  // }
+  if (!data) {
+    return <Loader />;
+  }
 
   const getOrderActions = () => {
     if (isAdvertiser) {
       switch (selectedOrder.status) {
-        case "Ждет подтверждения":
+        case "Ждёт подтверждения":
           return (
             <button
               className="red-btn"
@@ -139,7 +147,9 @@ const Orders = () => {
           return (
             <button
               className="green-btn"
-              onClick={() => handleModalChangeStatus(selectedOrder.id, "Завершен")}
+              onClick={() =>
+                handleModalChangeStatus(selectedOrder.id, "status", "Завершен")
+              }
             >
               Подтвердить выполнение
             </button>
@@ -157,15 +167,41 @@ const Orders = () => {
       }
     } else if (isBlogger) {
       switch (selectedOrder.status) {
-        case "Ждет подтверждения":
+        case "Ждёт подтверждения":
           return (
             <>
-              <button className="green-btn" onClick={() => handleModalChangeStatus(selectedOrder.id, "Подтвержден")}>Взять заказ</button>
-              <button className="red-btn" onClick={() => handleModalChangeStatus(selectedOrder.id, "Отклонен")}>Отклонить заказ</button>
+              <button
+                className="green-btn"
+                onClick={() =>
+                  handleModalChangeStatus(selectedOrder.id, "Подтвержден")
+                }
+              >
+                Взять заказ
+              </button>
+              <button
+                className="red-btn"
+                onClick={() =>
+                  handleModalChangeStatus(selectedOrder.id, "Отклонен")
+                }
+              >
+                Отклонить заказ
+              </button>
             </>
           );
         case "Подтвержден":
-          return <button className="green-btn" onClick={() => handleModalChangeStatus(selectedOrder.id, "Ждет подтверждения от рекламодателя")}>Подтвердить выполнение</button>;
+          return (
+            <button
+              className="green-btn"
+              onClick={() =>
+                handleModalChangeStatus(
+                  selectedOrder.id,
+                  "Ждет подтверждения от рекламодателя"
+                )
+              }
+            >
+              Подтвердить выполнение
+            </button>
+          );
         case "Отклонен":
         case "Завершен":
           return (
@@ -184,7 +220,7 @@ const Orders = () => {
     <div className="orders-container">
       <div className="list-order">
         <ul>
-          {[...(data || orders)]
+          {[...orders]
             .sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
             .map((order) => (
               <li
@@ -207,10 +243,10 @@ const Orders = () => {
               <div className="select-order-user">
                 <img
                   className="network-icon"
-                  src={network}
+                  src={`/img/network/${selectedOrder.network}.jpg`}
                   alt="Соц сеть"
                 ></img>
-                <h2>Имя получателя</h2>
+                <h2>{selectedOrder.channelName}</h2>
               </div>
               <div className="select-order-status">
                 <p>{selectedOrder.status}</p>
@@ -221,7 +257,7 @@ const Orders = () => {
               <input
                 type="text"
                 className="select-order-type"
-                value="Тип услуги"
+                value={selectedOrder.type}
                 disabled
               />
               <div className="select-order-date">
@@ -281,7 +317,7 @@ const Orders = () => {
                 <div className="save-select-order">
                   <button
                     className="save-select-order-btn"
-                    onClick={() => handleModalSaveChange(selectedOrder.id)}
+                    onClick={() => handleSaveChange(selectedOrder.id)}
                   >
                     Сохранить
                   </button>

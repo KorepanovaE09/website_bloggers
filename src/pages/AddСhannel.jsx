@@ -2,10 +2,18 @@ import { useState } from "react";
 import socialNetworkData from "../mockData/socialNetworkData.js";
 import categoriesData from "../mockData/categoriesData.js";
 import "../css/Style_addChannel.css";
+import usePostData from "../hooks/usePostData.js";
+import { useNavigate } from "react-router-dom";
 
 const AddChannel = ({ closeModal }) => {
-  //   хранит выбранную соц сеть
+  const navigate = useNavigate()
   const [selectedNetwork, setSelectedNetwork] = useState(null);
+  const {postData, error, isLoading} = usePostData();
+  const [data, setData] = useState({
+    nameChannel: "",
+    linkChannel: "",
+    description: "",
+  });
   //   отображение выпадающего списка
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -13,6 +21,26 @@ const AddChannel = ({ closeModal }) => {
     setSelectedNetwork(network);
     setIsDropdownOpen(false);
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await postData("/newChannel", {
+        ...data, network: selectedNetwork?.value,
+      })
+      navigate("/channel")
+    }
+    catch (err) {
+      console.log("Ошибка создания канала", err)
+    }
+  }
 
   return (
     <div className="modal-addChannel" onClick={closeModal}>
@@ -66,7 +94,11 @@ const AddChannel = ({ closeModal }) => {
             {isDropdownOpen && (
               <ul className="dropdown-list-network">
                 {socialNetworkData.map((network, index) => (
-                  <li key={index} onClick={() => handleSelectNetwork(network)}>
+                  <li
+                    key={index}
+                    name="network"
+                    onClick={() => handleSelectNetwork(network)}
+                  >
                     <img
                       className="dropdown-network-img"
                       src={network.src}
@@ -83,17 +115,29 @@ const AddChannel = ({ closeModal }) => {
             <input
               className="addChannel-name-input"
               type="text"
+              name="nameChannel"
               placeholder="Название канала"
+              onChange={handleChange}
             />
-            <input type="url" placeholder="Ссылка на канал" />
+            <input
+              type="url"
+              name="linkChannel"
+              placeholder="Ссылка на канал"
+              onChange={handleChange}
+            />
           </div>
 
           <div className="addChannel-descroption">
-            <textarea type="text" placeholder="Введите описание канала" />
+            <textarea
+              type="text"
+              name="description"
+              placeholder="Введите описание канала"
+              onChange={handleChange}
+            />
           </div>
 
           <div className="addChannel-save">
-            <button className="save-add-channel">Сохранить</button>
+            <button className="save-add-channel" onClick={() => handleSubmit()}>Сохранить</button>
           </div>
         </div>
       </div>

@@ -3,11 +3,12 @@ import "../css/Style_bloggers.css";
 import { useEffect, useState } from "react";
 import BloggerFilter from "./BloggersFilter";
 import useData from "../hooks/useData";
+import bloggersData from "../mockData/bloggersData";
 import { use } from "react";
 import Loader from "../components/Loader";
 
 const Bloggers = () => {
-  const { data: initialData, isLoading, isError } = useData("/bloggers", false);
+  const { data: initialData, isLoading, isError } = useData("/bloggers");
   const [data, setData] = useState(null);
   const [isFiltering, setIsFiltering] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);

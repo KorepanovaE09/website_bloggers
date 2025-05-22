@@ -3,11 +3,12 @@ import "../css/Style_form_new_order.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import usePostData from "../hooks/usePostData";
 import Loader from "../components/Loader";
+import { useConfirmModal } from "../context/ConfirmModalContext";
 
 const Form_order = () => {
   const navigate = useNavigate();
-  const { postData, isLoading, error } = usePostData(true);
-  // const [isLoading, setIsLoading]
+  const { postData, isLoading, error } = usePostData();
+  const { showConfirmModal } = useConfirmModal();
   const [searchParams] = useSearchParams();
   const [order, setOrder] = useState({
     title: "",
@@ -29,9 +30,17 @@ const Form_order = () => {
     }));
   };
 
+  const handleModalSaveChange = () => {
+    showConfirmModal({
+      title: "",
+      message: "Вы уверены, что хотите отправить заявку?",
+      onConfirm: () => handleSubmit(),
+    });
+  };
+
   const handleSubmit = async () => {
     try {
-      await postData("/createorder", {
+      await postData("/orders/create-order", {
         ...order,
         price,
         priceListTypeId,
@@ -44,7 +53,7 @@ const Form_order = () => {
   };
 
   if (isLoading) {
-    return (<Loader/>)
+    return <Loader />;
   }
 
   return (
@@ -77,7 +86,7 @@ const Form_order = () => {
           ></textarea>
 
           <div className="save-order">
-            <button className="save-order-btn" onClick={handleSubmit}>
+            <button className="save-order-btn" onClick={handleModalSaveChange}>
               Отправить заявку {price && `(${price} руб.)`}
             </button>
           </div>

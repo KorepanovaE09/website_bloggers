@@ -80,6 +80,7 @@ const SignUp = () => {
       });
 
       localStorage.setItem("token", response.refreshToken);
+      // localStorage.setItem("userRole", userRole)
       navigate("/");
     } catch (err) {
       console.error("Ошибка при входе:", error);

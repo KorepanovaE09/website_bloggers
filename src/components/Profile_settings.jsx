@@ -5,54 +5,41 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import useData from "../hooks/useData";
 import usePostData from "../hooks/usePostData";
-import countryCityData from "../mockData/countryCityData";
 import { useConfirmModal } from "../context/ConfirmModalContext";
+import Loader from "./Loader";
+import ChangePassword from "../pages/ChangePassword";
 
 const Profile = () => {
-  // const [selectedCountry, setSelectedCountry] = useState();
-  // const [selectedCity, setSelectedSity] = useState("");
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const { data, isLoading, isError, error } = useData("/profile", true);
+  const { data, isLoading, isError, error, refetch } = useData("/user/profile");
+  const { data: dataLocation } = useData("/data/locations");
   const { postData, postIsLoading, postError } = usePostData();
   const { showConfirmModal } = useConfirmModal();
   const [img, setImg] = useState(null);
   const [profileData, setProfileData] = useState({
-    img: "",
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    country: "",
-    city: "",
+    user_avatar_url: "",
+    user_firstname: "",
+    user_lastname: "",
+    user_nickname: "",
+    // user_phone_code: "",
+    user_phone: "",
+    user_email: "",
+    user_country: "",
+    user_city: "",
   });
 
   useEffect(() => {
-    if (!token) {
-      navigate("/auth/signup", { replace: true });
-      return;
-    }
+    // if (!token) {
+    //   navigate("/auth/signup", { replace: true });
+    //   return;
+    // }
 
-    if (data) {
+    if (data?.user) {
       setProfileData({
-        ...data,
-        // img: data.img || "",
-        // firstName: data.firstName,
-        // lastName: data.lastName,
-        // phone: data.phone,
-        // email: data.email,
-        // country: data.country,
-        // city: data.city,
+        ...data.user,
       });
     }
-  }, [data, navigate]);
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImg(URL.createObjectURL(file));
-    }
-  };
+  }, [data]);
 
   const handleChange = (field, value) => {
     setProfileData((prev) => ({
@@ -63,10 +50,19 @@ const Profile = () => {
 
   const handleSaveChange = async () => {
     try {
-      await postData("/save-setting", {
-        token,
-        ...data,
-      });
+      let payload;
+
+      if (profileData.user_avatar_url instanceof File) {
+        payload = new FormData();
+        for (const key in profileData) {
+          payload.append(key, profileData[key]);
+        }
+      } else {
+        payload = { ...profileData };
+      }
+
+      await postData("/user/edit_profile", payload);
+      await refetch();
     } catch (err) {
       console.log("Ошибка при сохранении данных", err);
     }
@@ -85,6 +81,10 @@ const Profile = () => {
     });
   };
 
+  if (!data || isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className="Profile">
       <div className="Profile_title">
@@ -94,7 +94,16 @@ const Profile = () => {
       <div className="ProfileSettings">
         <div className="ProfileSettings_top">
           <div className="ProfileSettings_avatar">
-            <img src={img || "/img/1.jpg"} alt="avatar"></img>
+            <img
+              src={
+                typeof profileData.user_avatar_url === "string"
+                  ? profileData.user_avatar_url
+                  : profileData.user_avatar_url
+                  ? URL.createObjectURL(profileData.user_avatar_url)
+                  : ""
+              }
+              alt="avatar"
+            ></img>
             <a
               href="#"
               onClick={() => document.getElementById("fileInput").click()}
@@ -106,12 +115,20 @@ const Profile = () => {
               type="file"
               style={{ display: "none" }}
               accept="image/*"
-              onChange={handleImageChange}
+              onChange={(e) =>
+                handleChange("user_avatar_url", e.target.files[0])
+              }
             />
           </div>
 
           <div className="Profile_exit">
             {/* <Link to="/auth/signup"> */}
+            <input
+              type="text"
+              placeholder="Никнейм"
+              value={profileData.user_nickname}
+              onChange={(e) => handleChange("user_nickname", e.target.value)}
+            />
             <button onClick={() => handleModalLogout()}>Выйти</button>
             {/* </Link> */}
           </div>
@@ -121,88 +138,92 @@ const Profile = () => {
             <input
               type="text"
               placeholder="Имя"
-              value={profileData.firstName}
-              onChange={(e) => handleChange("firstName", e.target.value)}
+              value={profileData.user_firstname}
+              onChange={(e) => handleChange("user_firstname", e.target.value)}
             ></input>
           </div>
           <div>
             <input
               type="text"
               placeholder="Фамилия"
-              value={profileData.lastName}
-              onChange={(e) => handleChange("lastName", e.target.value)}
+              value={profileData.user_lastname}
+              onChange={(e) => handleChange("user_lastname", e.target.value)}
             ></input>
           </div>
 
           <div>
-            <input
-              type="text"
-              placeholder="Номер телефона"
-              value={profileData.phone}
-              onChange={(e) => handleChange("phone", e.target.value)}
-            ></input>
-
-            {/* <PhoneInput
+            <PhoneInput
               country={"ru"}
-              value=""
-              /> */}
+              value={profileData.user_phone}
+              onChange={(phone) => handleChange("user_phone", phone)}
+            />
           </div>
 
           <div>
             <input
               type="text"
               placeholder="E-mail"
-              value={profileData.email}
-              onChange={(e) => handleChange("email", e.target.value)}
+              value={profileData.user_email}
+              onChange={(e) => handleChange("user_email", e.target.value)}
             ></input>
           </div>
 
           <div className="prifile-settings-country">
             <select
-              name="country"
-              value={profileData.country}
+              name="user_country"
+              value={profileData?.user_country}
               onChange={(e) => {
-                handleChange("country", e.target.value);
+                handleChange("user_country", e.target.value);
                 // setSelectedSity("");
               }}
             >
               <option value="" disabled>
-                Выберите страну
+                Страна
               </option>
-              {Object.keys(countryCityData).map((country) => (
-                <option key={country} value={country}>
-                  {country}
-                </option>
-              ))}
+              {dataLocation?.locations &&
+                Object.keys(dataLocation?.locations).map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
             </select>
           </div>
 
-          {profileData.country && (
-            <div className="prifile-settings-country">
-              <select
-                name="city"
-                value={profileData.city}
-                onChange={(e) => handleChange("city", e.target.value)}
-              >
-                <option value="" disabled>
-                  {" "}
-                  Выберите город
-                </option>
-                {countryCityData[profileData.country].map((city) => (
-                  <option key={city} value={city}>
-                    {city}
+          {profileData.user_country &&
+            dataLocation.locations &&
+            dataLocation.locations[profileData.user_country] && (
+              <div className="prifile-settings-country">
+                <select
+                  name="user_city"
+                  value={profileData?.user_city}
+                  onChange={(e) => handleChange("user_city", e.target.value)}
+                >
+                  <option value="" disabled>
+                    {" "}
+                    Город
                   </option>
-                ))}
-              </select>
-            </div>
-          )}
+                  {dataLocation?.locations[profileData.user_country].map(
+                    (city) => (
+                      <option key={city} value={city}>
+                        {city}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+            )}
 
-          <div className="Profile_save">
+          <div className="save">
             <button onClick={handleSaveChange}>Сохранить</button>
           </div>
         </div>
         <div className="change-password">
-          <a href="#">Сменить пароль</a>
+          <Link
+            to="/change-password"
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
+            Сменить пароль
+          </Link>
         </div>
       </div>
     </div>
@@ -210,61 +231,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-// typeUser === "blogger" ? (
-// ) : (
-//   <div className="Profile">
-//     <div className="Profile_title">
-//       <h1>Настройки профиля</h1>
-//     </div>
-// <div className="ProfileSettings">
-//   <div className="ProfileSettings_top">
-//     <div className="ProfileSettings_avatar">
-//       <img src={img || "/img/1.jpg"} alt="avatar"></img>
-//       <a
-//         href="#"
-//         onClick={() => document.getElementById("fileInput").click()}
-//       >
-//         Загрузить фото
-//       </a>
-//       <input
-//         id="fileInput"
-//         type="file"
-//         style={{ display: "none" }}
-//         accept="image/*"
-//         onChange={handleImageChange}
-//       />
-//     </div>
-
-//     <div className="Profile_exit">
-//       <Link to="/auth/signup">
-//         <button>Выйти</button>
-//       </Link>
-//     </div>
-//   </div>
-//   <div className="ProfileSettings_description">
-//     <div>
-//       <p>Имя</p>
-//       <input type="text"></input>
-//     </div>
-//     <div>
-//       <p>Фамилия</p>
-//       <input type="text"></input>
-//     </div>
-//     <div>
-//       <p>Номер телефона</p>
-//       <input type="text"></input>
-//     </div>
-//     <div>
-//       <p>E-mail</p>
-//       <input type="text"></input>
-//     </div>
-//     <div className="Profile_save">
-//       <button>Сохранить</button>
-//     </div>
-//   </div>
-// <div className="change-password">
-//   <a href="#">Сменить пароль</a>
-// </div>
-// </div>
-//   </div>

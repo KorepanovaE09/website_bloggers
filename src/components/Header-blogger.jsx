@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import "../css/Style_Header_blogger.css";
 import logo from "../assets/img/korad-promo.png";
 import walletIcon from "../assets/img/wallet.png";
+import UserRole from "./UserRole";
 import { useState } from "react";
 
 const Header = () => {
@@ -14,7 +15,6 @@ const Header = () => {
         <img className="header_logo" src={logo} alt="Логотип"></img>
 
         <Link to="/">
-          {/* <button className="btnbloggers">Каталог блогеров</button> */}
           <button
             className={`btn-header-left ${
               location.pathname === "/" ? "active" : ""
@@ -49,6 +49,7 @@ const Header = () => {
           </>
         )}
       </div>
+      <UserRole/>
 
       <div className="header_right">
         {token ? (

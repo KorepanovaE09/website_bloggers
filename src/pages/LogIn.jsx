@@ -15,7 +15,7 @@ import countryCityData from "../mockData/countryCityData";
 const LogIn = () => {
   const navigate = useNavigate();
   const { data, isLoading, isError, error } = useData("/data/location");
-  const { postData, PostError, PostIsLoading } = usePostData();
+  const {postData, isLoading : postIsLoading, error : postError } = usePostData();
   const [activeButton, setActivebutton] = useState("advertiser");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({
@@ -91,6 +91,7 @@ const LogIn = () => {
         userType: activeButton,
       });
       localStorage.setItem("token", responce.token);
+      // localStorage.setItem("userRole", userRole)
       navigate("/");
     } catch (err) {
       console.log("Ошибка при регистрации", err);

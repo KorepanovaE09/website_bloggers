@@ -26,6 +26,9 @@ button:active {
 
 body {
   position: relative;
+  /* margin: 0;
+  padding: 0;
+  height: 100%; */
   /* overflow: hidden; */
 }
 
@@ -101,7 +104,7 @@ input {
 }
 
 input::placeholder {
-  color: #999; 
+  color: #999;
   opacity: 0.9;
 }
 
@@ -128,6 +131,15 @@ input[type="date"] {
   outline: none;
 }
 
+.password-input{
+  position: relative;
+}
+
+.password-input .password-icon{
+  position: absolute;
+  right: 10px;
+}
+
 textarea {
   max-width: 100%;
   min-width: 100%;
@@ -138,6 +150,7 @@ textarea {
   padding: 10px;
   box-sizing: border-box;
   line-height: 1.5;
+  resize: none;
 }
 
 textarea:focus {
@@ -157,6 +170,25 @@ select {
   background-repeat: no-repeat;
   background-position: right 10px center; /* Позиционируем стрелку */
   background-size: 12px;
+}
+
+/* textarea::-webkit-scrollbar {
+  width: 5px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background-color: #a5b0e6;
+  border-radius: 10px;
+  border: 1px solid transparent; 
+} */
+
+textarea::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }
 
 .error-message {

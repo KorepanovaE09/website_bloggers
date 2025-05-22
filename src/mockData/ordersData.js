@@ -1,13 +1,17 @@
 const ordersData = [
   {
     id: 1,
-    title: "Продаю тапки",
+    network: "instagram",
+    channelName: "Math Expert",
+    title: "Реклама в Instagram",
     status: "Ждет подтверждения", // 'waiting', 'confirmed', 'rejected', 'completed'
-    description: "Описание заказа 1",
-    bloggerComments: "",
+    description:
+      "Рекламная интеграция на аккаунте в Instagram для продвижения бренда. Включает в себя публикацию поста и истории.",
+    bloggerComments:
+      "Публикация будет в течение недели, возможна корректировка по пожеланиям клиента.",
     startDate: "2025-04-25",
-    endDate: "",
-    type: "Тип услуги 1",
+    endDate: "2025-05-05",
+    type: "Публикация поста и истории в Instagram",
   },
   {
     id: 2,

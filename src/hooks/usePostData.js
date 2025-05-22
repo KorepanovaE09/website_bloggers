@@ -1,12 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 
-const usePostData = (useAuth = false) => {
+const usePostData = (useAuth = true) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [responseData, setResponseData] = useState(null);
 
-  const API_URL = process.env.REACT_APP_API_URL || "https://koradpromo.loca.lt";
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const postData = async (endpoint, payload) => {
     setIsLoading(true);
@@ -15,17 +15,19 @@ const usePostData = (useAuth = false) => {
 
     try {
       const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: {},
         withCredentials: false,
       };
 
       if (useAuth) {
-        const token = localStorage.getItem("token")?.trim();;
+        const token = localStorage.getItem("token")?.trim();
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
+      }
+
+      if (!(payload instanceof FormData)){
+        config.headers["Content-Type"] = "application/json";
       }
 
       const response = await axios.post(

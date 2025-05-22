@@ -10,9 +10,9 @@ import newStyled from "@emotion/styled";
 localStorage.removeItem("bloggerFilters");
 
 const BloggerFilter = ({ closeModal, updateFilter }) => {
-  const { data: dataLocation } = useData("/data/locations", false);
-  const { data: dataCategories } = useData("/data/categories", false);
-  const { data: dataNetwork } = useData("/data/networks", false);
+  const { data: dataLocation } = useData("/data/locations");
+  const { data: dataCategories } = useData("/data/categories");
+  const { data: dataNetwork } = useData("/data/networks");
   const { postData, postError, postIsLoading } = usePostData();
 
   const [formData, setFormData] = useState(() => {
@@ -185,31 +185,27 @@ const BloggerFilter = ({ closeModal, updateFilter }) => {
             onChange={handleChange}
           >
             <option value="" disabled>
-              Страна блогера
+              Выбрать страну
             </option>
-            {Object.keys(dataLocation?.locations || countryCityData).map(
-              (country) => (
-                <option key={country} value={country}>
-                  {country}
-                </option>
-              )
-            )}
+            {Object.keys(dataLocation?.locations || []).map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
           </select>
           <p>Город</p>
           <select name="city" value={formData.city} onChange={handleChange}>
             <option value="" disabled>
-              Выберите город
+              Выбрать город
             </option>
             {formData.country &&
-              (
-                dataLocation?.locations?.[formData.country] ||
-                countryCityData[formData.country] ||
-                []
-              ).map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
+              (dataLocation?.locations?.[formData.country] || []).map(
+                (city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                )
+              )}
           </select>
 
           <p>Количество подписчиков</p>

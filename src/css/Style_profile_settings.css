@@ -14,6 +14,11 @@
   /* scrollbar-width: none; */
 }
 
+.Profile .react-tel-input .form-control {
+  width: 370px;
+  height: 40px;
+}
+
 .Profile h1 {
   margin-bottom: 15px;
 }
@@ -50,7 +55,14 @@
 
 .Profile_exit {
   display: flex;
-  align-items: center;
+  align-items: end;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.Profile_exit input {
+  height: 40px;
+  width: 200px;
 }
 
 .Profile_exit button {
@@ -76,7 +88,8 @@
   padding-left: 10px;
 }
 
-.prifile-settings-country select, .prifile-settings-city select{
+.prifile-settings-country select,
+.prifile-settings-city select {
   width: 100%;
   height: 40px;
   /* margin-bottom: 20px; */
@@ -90,14 +103,14 @@
   outline: none;
 }
 
-.Profile_save {
+.save {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 0 10px;
 }
 
-.Profile_save button {
+.save button {
   width: 130px;
   height: 35px;
   border-radius: 30px;
