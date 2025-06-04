@@ -1,0 +1,58 @@
+.confirm-action-body {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.confirm-action-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.confirm-action-content h1 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.confirm-action-body .form{
+    display: flex;
+     flex-direction: column;
+  align-items: center;
+}
+
+.confirm-action-body input{
+    width: 300px;
+    height: 40px;
+    padding: 8px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 5px;
+    right: 4px;
+}
+
+.confirm-action-body .save{
+    margin: 60px 0 0;
+}
+
+.confirm-action-body .password-input .password-icon{
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
