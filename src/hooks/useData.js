@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const useData = (endpoint, useAuth = true) => {
-  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -20,30 +18,11 @@ const useData = (endpoint, useAuth = true) => {
       setError(null);
 
       try {
-        const config = { signal };
-
-        if (useAuth) {
-          const token = localStorage.getItem("token");
-          if (token) {
-            config.headers = {
-              Authorization: `Bearer ${token}`,
-            };
-          }
-        }
-
+        const config = { signal, withCredentials: true };
         const response = await axios.get(url, config);
         setData(response.data);
+        return response.data;
       } catch (err) {
-        if (!axios.isCancel(err)) {
-          if (err.response?.status === 401) {
-            localStorage.removeItem("token");
-            navigate("/auth/signup", { replace: true });
-            return;
-          }
-
-          setIsError(true);
-          setError(err.response?.data?.message || "Произошла ошибка запроса");
-        }
       } finally {
         setIsLoading(false);
       }

@@ -16,17 +16,10 @@ const usePostData = (useAuth = true) => {
     try {
       const config = {
         headers: {},
-        withCredentials: false,
+        withCredentials: useAuth,
       };
 
-      if (useAuth) {
-        const token = localStorage.getItem("token")?.trim();
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
-      }
-
-      if (!(payload instanceof FormData)){
+      if (!(payload instanceof FormData)) {
         config.headers["Content-Type"] = "application/json";
       }
 
@@ -43,8 +36,9 @@ const usePostData = (useAuth = true) => {
         err.response?.data?.message ||
         err.message ||
         "Произошла ошибка при выполнении запроса";
+      err.customMessage = errorMessage;
       setError(errorMessage);
-      throw new Error(errorMessage);
+      throw err;
     } finally {
       setIsLoading(false);
     }
