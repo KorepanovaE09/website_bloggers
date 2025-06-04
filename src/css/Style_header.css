@@ -68,6 +68,21 @@ header img.img_balance {
   margin-right: 40px;
 }
 
+.header_right span{
+}
+
+.rub-symbol {
+  margin-left: 5px;
+  transform: translateY(1px);
+  display: inline-block;
+}
+/* .balance-amount {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 16px;
+} */
+
 .header_right button {
   border-radius: 25px;
   height: 45px;
