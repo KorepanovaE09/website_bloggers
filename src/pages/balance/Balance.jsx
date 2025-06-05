@@ -19,7 +19,7 @@ const Balance = () => {
   const [operation, setOperation] = useState();
   const { postData } = usePostData();
   const [amount, setAmount] = useState();
-  const { refetch: refetchUserData } = useContext(AuthContext);
+  const { user, refetch: refetchUserData } = useContext(AuthContext);
   const location = useLocation();
 
   useEffect(() => {
@@ -63,33 +63,43 @@ const Balance = () => {
 
   return (
     <div className="transaction">
-      <div className="balance-action">
-        <input
-          className="balance-action-input"
-          type="number"
-          placeholder="Введите сумму"
-          value={amount || ""}
-          onChange={(e) => setAmount(e.target.value)}
-        />
-        <button
-          className={`btn-deposit ${!amount ? "disabled" : ""}`}
-          disabled={!amount}
-          onClick={() => {
-            confirmModal();
-            setOperation("deposit");
-          }}
-        >
-          Пополнить
-        </button>
-        <button
-          className="btn-withdraw"
-          onClick={() => {
-            confirmModal();
-            setOperation("withdraw");
-          }}
-        >
-          Снять
-        </button>
+      <div className="balance-top">
+        <div className="balance-action">
+          <input
+            className="balance-action-input"
+            type="number"
+            placeholder="Введите сумму"
+            value={amount || ""}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+          <button
+            className={`btn-deposit ${!amount ? "disabled" : ""}`}
+            disabled={!amount}
+            onClick={() => {
+              confirmModal();
+              setOperation("deposit");
+            }}
+          >
+            Пополнить
+          </button>
+          <button
+            className="btn-withdraw"
+            onClick={() => {
+              confirmModal();
+              setOperation("withdraw");
+            }}
+          >
+            Снять
+          </button>
+        </div>
+        {(user?.role === "advertiser") && (
+          <input
+            type="text"
+            className="frozen_balance"
+            value={`${data?.frozen_balance} руб. заморожено`}
+            disabled
+          />
+        )}
       </div>
 
       <div className="balance-history">
@@ -123,3 +133,5 @@ const Balance = () => {
 };
 
 export default Balance;
+
+//
