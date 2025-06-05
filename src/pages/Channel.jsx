@@ -4,26 +4,22 @@ import channelsData from "../mockData/myChannelsData";
 import { useEffect, useState } from "react";
 import useData from "../hooks/useData";
 import usePostData from "../hooks/usePostData";
-import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
+import Success from "../components/Success";
+import Error from "../components/Error";
+import { useConfirmModal } from "../context/ConfirmModalContext";
 
 const Channel = () => {
-  const navigate = useNavigate();
-  const token = localStorage.getItem("token");
   const [modalOpen, setModalOpen] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
   const { data, isLoading, isError, error } = useData("/channels");
   const [channels, setChannels] = useState();
   const { postData, postIsLoading, postError } = usePostData();
+  const {showConfirmModal} = useConfirmModal()
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
-
-  // useEffect(() => {
-  //   if (!token) {
-  //     navigate("/auth/signup", { replace: true });
-  //     return;
-  //   }
-  // }, [navigate]);
 
   useEffect(() => {
     if (data) {
@@ -42,7 +38,7 @@ const Channel = () => {
                 if (field === "status") {
                   return {
                     ...service,
-                    status: service.status === "active" ? "unactive" : "active",
+                    status: service.status === "active" ? "unActive" : "active",
                   };
                 }
                 if (field === "price") {
@@ -51,7 +47,7 @@ const Channel = () => {
                     price: value,
                   };
                 }
-                return service
+                return service;
               }),
             }
           : channel
@@ -69,10 +65,32 @@ const Channel = () => {
 
   const handleSaveChange = async () => {
     try {
-      await postData("save-channel", { ...channels });
+      await postData("/channels/edit-price", { ...channels });
+      setShowSuccess(true);
+      closeModal();
     } catch (err) {
+      setShowError(true);
       console.log("Ошибка при сохранеии данных", err);
     }
+  };
+
+  const handleDeleteChannel = async (channelId) => {
+    setChannels((prev) => prev.filter((channel) => channel.id !== channelId))
+    try {
+      await postData("/channel/delete", channelId)
+      setShowSuccess(true)
+    }
+    catch (err){
+      setShowError(true)
+    }
+  }
+
+  const handleModalDelete = (channelId) => {
+    showConfirmModal({
+      title: "Удаление заказа",
+      message: "Вы уверены, что хотите удалить заказ?",
+      onConfirm: () => handleDeleteChannel(channelId),
+    });
   };
 
   if (!data || isLoading) {
@@ -105,7 +123,19 @@ const Channel = () => {
           Добавить канал
         </button>
 
-        {modalOpen && <AddChannel closeModal={closeModal} />}
+        {modalOpen && (
+          <AddChannel
+            closeModal={closeModal}
+            onSuccess={() => {
+              setShowSuccess(true);
+              closeModal();
+            }}
+            onError={() => {
+              setShowError(true);
+              closeModal();
+            }}
+          />
+        )}
       </div>
 
       <div className="my-channels-conteiner-grid">
@@ -114,12 +144,9 @@ const Channel = () => {
             <div className="my-channel-header">
               <img
                 className="network-icon"
-                src={`/img/network/${channel.network}.jpg`}
-                alt={channel.network}
+                src={channel.src}
+                alt="соц сеть"
               ></img>
-              {/* <a key="" href="#" target="_blank" rel="noopener noreferrer">
-                Название канала
-              </a> */}
               <input
                 type="text"
                 value={channel.channelName}
@@ -127,6 +154,26 @@ const Channel = () => {
                   handleChange(channel.id, "channelName", e.target.value)
                 }
               />
+              <button className="delete-channel" onClick={() => handleModalDelete(channel.id)}>
+                <svg className="close-icon" viewBox="0 0 24 24">
+                  <line
+                    x1="4"
+                    y1="4"
+                    x2="20"
+                    y2="20"
+                    stroke="black"
+                    strokeWidth="1.5"
+                  />
+                  <line
+                    x1="20"
+                    y1="4"
+                    x2="4"
+                    y2="20"
+                    stroke="black"
+                    strokeWidth="1.5"
+                  />
+                </svg>
+              </button>
             </div>
 
             <div className="my-channel-description">
@@ -156,6 +203,7 @@ const Channel = () => {
                           )
                         }
                       />
+                      <div className="checkmark"></div>
                       {service.name}
                     </label>
                     <div className="services-price">
@@ -192,6 +240,17 @@ const Channel = () => {
           </div>
         ))}
       </div>
+
+      {showSuccess && (
+        <Success
+          title="Изменения сохранены!"
+          onClose={() => setShowSuccess(false)}
+        />
+      )}
+
+      {showError && (
+        <Error onClose={() => setShowError(false)} style={{ top: "7px" }} />
+      )}
     </div>
   );
 };
