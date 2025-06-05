@@ -89,6 +89,7 @@
 .select-order-user {
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
 .select-order-type {
@@ -207,11 +208,18 @@
 }
 
 .green-btn {
-  border: 1px solid #54e6d9;
+  border: 1px solid rgba(118, 177, 247, 0.5);
   box-shadow: 0 0 8px rgba(135, 240, 230, 0.6); /* #87f0e6 в rgba */
 }
 
 .red-btn {
   border: 1px solid #e6a5b0;
   box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
+}
+
+.status-order{
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 10px;
 }

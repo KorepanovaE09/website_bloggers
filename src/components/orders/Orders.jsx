@@ -1,39 +1,46 @@
 import { useEffect, useState } from "react";
-import "../css/Style_orders.css";
-import network from "../assets/img/wallet.png";
-import ordersData from "../mockData/ordersData";
-import useData from "../hooks/useData";
-import usePostData from "../hooks/usePostData";
-import Loader from "../components/Loader";
-import { useConfirmModal } from "../context/ConfirmModalContext";
-import { useNavigate } from "react-router-dom";
+import "../../css/Style_orders.css";
+import useData from "../../hooks/useData";
+import usePostData from "../../hooks/usePostData";
+import Loader from "../Loader";
+import { useConfirmModal } from "../../context/ConfirmModalContext";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
+import ordersData from "../../mockData/ordersData";
+import OrderList from "./OrdersList";
+import OrderActions from "./OrdersActions";
+import Success from "../Success";
+import Error from "../Error";
 
 const Orders = () => {
-  const userType = "advertiser";
-  const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const isBlogger = userType === "blogger";
-  const isAdvertiser = userType === "advertiser";
-
+  const { user } = useContext(AuthContext);
+  const role = localStorage.getItem("activeRole") || user?.role
+  const endpoint = `/orders?role=${role}`
   const { showConfirmModal } = useConfirmModal();
   const { postData, postIsLoading, PostError } = usePostData();
-  const { data, isLoading, isError, error, refetch } = useData("/orders");
-  const [orders, setOrders] = useState([]);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const { data, isLoading, isError, error, refetch } = useData(endpoint);
+  // const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState(ordersData);
+  const { refetch: refetchUserData } = useContext(AuthContext);
+
+
   const [selectedOrderId, setSelectedOrderId] = useState(null);
   const today = new Date().toISOString().split("T")[0];
 
+  const isBlogger = user?.role === "blogger";
+  const isAdvertiser = user?.role === "advertiser";
+
   useEffect(() => {
-    if (!token) {
-      navigate("/auth/signup", {
-        replace: true,
-        // state: { from: window.location.pathname },
-      });
-      return;
-    }
     if (data) {
       setOrders(data);
     }
-  }, [navigate, data]);
+  }, [data]);
+
+  // if (!data) {
+  //   return <Loader />;
+  // }
 
   const selectedOrder = (orders || []).find(
     (order) => order.id === selectedOrderId
@@ -52,18 +59,12 @@ const Orders = () => {
       const orderToSave = (orders || []).find((order) => order.id === orderId);
       await postData("/orders/edit-order", orderToSave);
       await refetch();
+      setShowSuccess(true);
     } catch (err) {
+      setShowError(true);
       console.log("Ошибка сохранения", err);
     }
   };
-
-  // const handleModalSaveChange = (orderId) => {
-  //   showConfirmModal({
-  //     title: "Отправка заказа",
-  //     message: "Сохранить изменения?",
-  //     onConfirm: () => handleSaveChange(orderId),
-  //   });
-  // };
 
   const handleDelete = async (orderId) => {
     setOrders((prev) => prev.filter((order) => order.id !== orderId));
@@ -71,8 +72,10 @@ const Orders = () => {
       await postData("/delete-order", {
         order_id: orderId,
       });
+      setShowSuccess(true);
     } catch (err) {
       console.log("Ошибка удаления заказа", err);
+      setShowError(true);
     }
   };
 
@@ -84,26 +87,6 @@ const Orders = () => {
     });
   };
 
-  // const handleChangeStatus = async (orderId, status) => {
-  //   try {
-  //     const responce = await postData("orders/", {
-  //       order_id: orderId,
-  //       order_status: status,
-  //     });
-  //     const updateOrder = responce.data;
-
-  //     setOrders((prev) =>
-  //       prev.map((order) =>
-  //         order.id === updateOrder.id
-  //           ? { ...order, status: updateOrder.status }
-  //           : order
-  //       )
-  //     );
-  //   } catch (err) {
-  //     console.log("Ошибка подтверждения заказа", err);
-  //   }
-  // };
-
   const handleModalChangeStatus = (orderId, field, value) => {
     showConfirmModal({
       title: "Подтверждение заказа",
@@ -112,7 +95,9 @@ const Orders = () => {
         const updatedOrders = orders.map((order) =>
           order.id === orderId ? { ...order, [field]: value } : order
         );
-        const updatedOrder = updatedOrders.find((order) => order.id === orderId);
+        const updatedOrder = updatedOrders.find(
+          (order) => order.id === orderId
+        );
         setOrders(updatedOrders);
         postData("/orders/edit-order", updatedOrder).then(() => {
           refetch();
@@ -123,117 +108,21 @@ const Orders = () => {
 
   const isFieldDisabled = (status) => {
     return (
-      status === "Отклонен" || status === "Подтвержден" || status === "Завершен"
+      status === "Отклонен" ||
+      status === "В работе" ||
+      status === "Завершен" ||
+      status === "Ждет подтверждения от рекламодателя"
     );
-  };
-
-  if (!data) {
-    return <Loader />;
-  }
-
-  const getOrderActions = () => {
-    if (isAdvertiser) {
-      switch (selectedOrder.status) {
-        case "Ждёт подтверждения":
-          return (
-            <button
-              className="red-btn"
-              onClick={() => handleModalDelete(selectedOrder.id)}
-            >
-              Удалить
-            </button>
-          );
-        case "Подтвержден":
-          return (
-            <button
-              className="green-btn"
-              onClick={() =>
-                handleModalChangeStatus(selectedOrder.id, "status", "Завершен")
-              }
-            >
-              Подтвердить выполнение
-            </button>
-          );
-        case "Отклонен":
-        case "Завершен":
-          return (
-            <button
-              className="red-btn"
-              onClick={() => handleModalDelete(selectedOrder.id)}
-            >
-              Удалить
-            </button>
-          );
-      }
-    } else if (isBlogger) {
-      switch (selectedOrder.status) {
-        case "Ждёт подтверждения":
-          return (
-            <>
-              <button
-                className="green-btn"
-                onClick={() =>
-                  handleModalChangeStatus(selectedOrder.id, "Подтвержден")
-                }
-              >
-                Взять заказ
-              </button>
-              <button
-                className="red-btn"
-                onClick={() =>
-                  handleModalChangeStatus(selectedOrder.id, "Отклонен")
-                }
-              >
-                Отклонить заказ
-              </button>
-            </>
-          );
-        case "Подтвержден":
-          return (
-            <button
-              className="green-btn"
-              onClick={() =>
-                handleModalChangeStatus(
-                  selectedOrder.id,
-                  "Ждет подтверждения от рекламодателя"
-                )
-              }
-            >
-              Подтвердить выполнение
-            </button>
-          );
-        case "Отклонен":
-        case "Завершен":
-          return (
-            <button
-              className="red-btn"
-              onClick={() => handleModalDelete(selectedOrder.id)}
-            >
-              Удалить
-            </button>
-          );
-      }
-    }
   };
 
   return (
     <div className="orders-container">
       <div className="list-order">
-        <ul>
-          {[...orders]
-            .sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
-            .map((order) => (
-              <li
-                key={order.id}
-                onClick={() => setSelectedOrderId(order.id)}
-                className={`btn-select-order ${
-                  selectedOrderId === order.id ? "active" : ""
-                }`}
-              >
-                {order.title}
-              </li>
-            ))}
-        </ul>
+        <OrderList
+          orders={orders}
+          selectedOrderId={selectedOrderId}
+          setSelectedOrderId={setSelectedOrderId}
+        />
       </div>
 
       <div className="select-order-conteiner">
@@ -243,7 +132,8 @@ const Orders = () => {
               <div className="select-order-user">
                 <img
                   className="network-icon"
-                  src={`/img/network/${selectedOrder.network}.jpg`}
+                  src={selectedOrder.icon}
+                  // src={`/img/network/${selectedOrder.network}.jpg`}
                   alt="Соц сеть"
                 ></img>
                 <h2>{selectedOrder.channelName}</h2>
@@ -323,11 +213,22 @@ const Orders = () => {
                   </button>
                 </div>
               )}
-              <div className="select-order-actions">{getOrderActions()}</div>
+              <div className="select-order-actions">
+                <OrderActions
+                  order={selectedOrder}
+                  userRole={user?.role}
+                  handleModalChangeStatus={handleModalChangeStatus}
+                  handleModalDelete={handleModalDelete}
+                  refetchUserData = {refetchUserData}
+                />
+              </div>
             </div>
           </div>
         )}
       </div>
+      {showSuccess && <Success onClose={() => setShowSuccess(false)} style={{ top: "92px" }} />}
+
+      {showError && <Error onClose={() => setShowError(false)} style={{ top: "92px" }}/>}
     </div>
   );
 };
