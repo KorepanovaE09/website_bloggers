@@ -5,18 +5,20 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import React, { useState } from "react";
 import "../css/Style_changePassword.css";
 import usePostData from "../hooks/usePostData";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import { validateFormProfile } from "../utils/validateForm";
+import Error from "../components/Error";
 
 const ChangePassword = () => {
   const navigate = useNavigate();
   const { postData, isLoading, error, data } = usePostData();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    password: "",
+    currentPassword: "",
     newPassword: "",
   });
   const [errors, setErrors] = useState({
-    password: "",
+    currentPassword: "",
     newPassword: "",
   });
 
@@ -46,17 +48,20 @@ const ChangePassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateFormProfile()) return
     if (!validateForm()) return;
 
     try {
-      await postData("user/change_password", formData);
-      navigate("/profile");
+      await postData("/user/change-password", formData);
+      navigate("/profile", { state: { passwordChange: true } });
     } catch (err) {
       console.log("Ошибка смена пароля", err);
-      if (err.response?.status === 401) {
+      if (err.response?.status === 400) {
         setErrors({
-          password: "Неверный пароль",
+          currentPassword: "Неверный пароль",
         });
+      } else {
+        navigate("/profile", { state: { passwordChange: false } });
       }
     }
   };
@@ -69,11 +74,12 @@ const ChangePassword = () => {
           <div className="password-input">
             <Input
               type={showPassword ? "text" : "password"}
-              name="password"
+              name="currentPassword"
               placeholder="Введите старый пароль"
               disableUnderline
               onChange={handleChange}
-              className={errors.password ? "error" : ""}
+              className={errors.currentPassword ? "error" : ""}
+              required
             />
             <IconButton
               className="password-icon"
@@ -86,8 +92,8 @@ const ChangePassword = () => {
                 <VisibilityOff fontSize="small" />
               )}
             </IconButton>
-            {errors.password && (
-              <p className="error-mesage">{errors.password}</p>
+            {errors.currentPassword && (
+              <p className="error-mesage">{errors.currentPassword}</p>
             )}
           </div>
 
@@ -99,6 +105,7 @@ const ChangePassword = () => {
               disableUnderline
               onChange={handleChange}
               className={errors.newPassword ? "error" : ""}
+              required
             />
             <IconButton
               className="password-icon"

@@ -64,21 +64,6 @@
   box-sizing: border-box;
 }
 
-/* .select-order-header-btn {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-} */
-
-/* .select-order-header-btn button{
-    height: 45px;
-    border: 1px solid #a5b0e6;
-    box-shadow: 0 0 5px rgba(165, 176, 230, 0.5);
-    border-radius: 50px;
-    background-color: transparent;
-    padding: 15px;
-    font-size: 13px;
-}*/
 
 .select-order-header {
   display: flex;
@@ -98,13 +83,6 @@
   width: 200px;
 }
 
-/* .select-order-status-input {
-  height: 45px;
-  border: 1px solid #a5b0e6;
-  background-color: transparent;
-  width: 170px;
-  align-items: end;
-} */
 
 .select-order-status p {
   color: #333;
@@ -178,21 +156,6 @@
   justify-content: space-between;
 }
 
-/* .select-order-deleet {
-  display: flex;
-  gap: 15px;
-}
-
-.select-order-deleet button {
-  height: 45px;
-  border: 1px solid #e6a5b0;
-  box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
-  border-radius: 50px;
-  background-color: transparent;
-  padding: 15px;
-  font-size: 15px;
-} */
-
 .select-order-actions {
   display: flex;
   gap: 15px;
@@ -209,7 +172,7 @@
 
 .green-btn {
   border: 1px solid rgba(118, 177, 247, 0.5);
-  box-shadow: 0 0 8px rgba(135, 240, 230, 0.6); /* #87f0e6 в rgba */
+  box-shadow: 0 0 8px rgba(135, 240, 230, 0.6); 
 }
 
 .red-btn {

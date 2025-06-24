@@ -1,29 +1,30 @@
 import Bloggers_card from "./Bloggers_card";
 import "../css/Style_bloggers.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import BloggerFilter from "./BloggersFilter";
 import useData from "../hooks/useData";
 import bloggersData from "../mockData/bloggersData";
-import { use } from "react";
 import Loader from "../components/Loader";
+import Progress from "../components/Progress";
+import { lime } from "@mui/material/colors";
+
 
 const Bloggers = () => {
-  const { data: initialData, isLoading, isError } = useData("/bloggers");
+  const { data: newData, isLoading, isError } = useData("/bloggers");
+  const [page, setPage] = useState(1);
   const [data, setData] = useState(null);
-  const [isFiltering, setIsFiltering] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
   useEffect(() => {
-    // document.body.style.overflow = "auto";
-    if (initialData) {
-      setData(initialData);
+    if (newData) {
+      setData(newData);
     }
-  }, [initialData]);
+  }, [newData]);
 
   const handleUpdateFilter = (filterData) => {
-    // setIsFiltering(true);
     setData(filterData);
   };
 
@@ -42,7 +43,8 @@ const Bloggers = () => {
           updateFilter={handleUpdateFilter}
         />
       )}
-      <Bloggers_card bloggers={data} />
+      <Bloggers_card bloggers={data}/>
+      {isLoading && <Progress />}
     </div>
   );
 };

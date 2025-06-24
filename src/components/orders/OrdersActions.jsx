@@ -22,15 +22,6 @@ const OrderActions = ({
             Удалить
           </button>
         );
-      // case "В работе":
-      //   return (
-      //     <button
-      //       className="green-btn"
-      //       onClick={() => handle.changeStatus("Завершен")}
-      //     >
-      //       Подтвердить выполнение
-      //     </button>
-      //   );
       case "Отклонен":
       case "Завершен":
         return (

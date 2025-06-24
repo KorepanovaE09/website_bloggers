@@ -21,8 +21,7 @@ const Orders = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const { data, isLoading, isError, error, refetch } = useData(endpoint);
-  // const [orders, setOrders] = useState([]);
-  const [orders, setOrders] = useState(ordersData);
+  const [orders, setOrders] = useState([]);
   const { refetch: refetchUserData } = useContext(AuthContext);
 
 
@@ -38,9 +37,9 @@ const Orders = () => {
     }
   }, [data]);
 
-  // if (!data) {
-  //   return <Loader />;
-  // }
+  if (!data) {
+    return <Loader />;
+  }
 
   const selectedOrder = (orders || []).find(
     (order) => order.id === selectedOrderId
@@ -133,7 +132,6 @@ const Orders = () => {
                 <img
                   className="network-icon"
                   src={selectedOrder.icon}
-                  // src={`/img/network/${selectedOrder.network}.jpg`}
                   alt="Соц сеть"
                 ></img>
                 <h2>{selectedOrder.channelName}</h2>
@@ -168,7 +166,6 @@ const Orders = () => {
             <input
               className="select-order-name"
               type="text"
-              //   placeholder={selectedItem || ""}
               value={selectedOrder.title}
               onChange={(e) =>
                 handleChange(selectedOrder.id, "title", e.target.value)

@@ -1,17 +1,20 @@
+.Profile_body{
+  height: 100%;
+}
+
 .Profile {
   padding-top: 20px;
   display: flex;
   flex-direction: column;
-  margin: 20px auto;
+  margin: 40px auto;
   background-color: #fff;
   border-radius: 20px;
   width: 450px;
   align-items: center;
+  justify-content: center;
 
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-  max-height: 90vh;
   overflow-y: hidden;
-  /* scrollbar-width: none; */
 }
 
 .Profile .react-tel-input .form-control {
@@ -19,21 +22,30 @@
   height: 40px;
 }
 
+.Profile .react-tel-input .form-control.error {
+  border: 1px solid #e6a5b0;
+  box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
+} 
+
+.Profile .react-tel-input .form-control:focus {
+  border: 1px solid #e6a5b0;
+  box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
+} 
+
 .Profile h1 {
   margin-bottom: 15px;
 }
 
 .Profile img {
   border-radius: 50%;
-  width: 65px;
-  height: 65px;
+  width: 85px;
+  height: 85px;
   object-fit: cover;
   object-position: center;
 }
 
-.Profile p {
-  margin: 0;
-  margin-bottom: 15px;
+.Profile .input-errors-group p {
+  margin-top: 8px;
 }
 
 .ProfileSettings_top {
@@ -57,12 +69,11 @@
   display: flex;
   align-items: end;
   flex-direction: column;
-  gap: 10px;
 }
 
 .Profile_exit input {
   height: 40px;
-  width: 200px;
+  width: 212px;
 }
 
 .Profile_exit button {
@@ -81,26 +92,15 @@
 }
 
 .ProfileSettings_description input {
-  /* margin-bottom: 15px; */
   height: 40px;
   width: 350px;
   border-radius: 10px;
   padding-left: 10px;
 }
 
-.prifile-settings-country select,
-.prifile-settings-city select {
+.Profile select{
   width: 100%;
   height: 40px;
-  /* margin-bottom: 20px; */
-  border: none;
-  background-color: #f3f4fc;
-}
-
-.prifile-settings-country-city select:focus {
-  border: 1px solid #e6a5b0;
-  box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
-  outline: none;
 }
 
 .save {
@@ -123,3 +123,53 @@
   justify-content: center;
   margin-bottom: 30px;
 }
+
+.username-conteiner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+#inputField {
+  border: 2px solid #e5e6ed;
+  height: 40px;
+  background-color: transparent;
+  border-radius: 10px;
+  color: black;
+  font-weight: 500;
+  outline: none;
+  caret-color: rgb(155, 78, 255);
+  transition-duration: .3s;
+  outline: none;
+}
+
+.userIcon {
+  position: absolute;
+  fill: #a5b0e6;
+  width: 12px;
+  top: -23px;
+  left: 6px;
+}
+
+.usernameLabel {
+  position: absolute;
+  top: -25px;
+  left: 25px;
+  color: #a5b0e6;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: Whitney, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
+}
+
+.username-conteiner input{
+  background-color: #a5b0e6;
+}
+
+#inputField:focus,
+#inputField:valid {
+  transition-duration: .3s;
+}
+

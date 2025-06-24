@@ -2,18 +2,16 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import bloggersData from "../mockData/bloggersData";
 import socialNetworkData from "../mockData/socialNetworkData";
 import "../css/Style_bloggerDetails.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import useData from "../hooks/useData";
 
 const BloggerDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const { id } = useParams();
+  const { user } = useContext(AuthContext);
   const blogger = location.state?.blogger;
 
-  // const { data, isLoading, isError, error } = useData("/details_blogger");
-  // const blogger = bloggerFromState.find((b) => b.id === parseInt(id));
   const [selectedService, setSelectedService] = useState(null);
   const [service, setService] = useState({
     name: "",
@@ -100,7 +98,7 @@ const BloggerDetails = () => {
               }`}
               disabled={!service.price}
               onClick={() => {
-                if (!token) {
+                if (!user) {
                   navigate("/auth/login");
                 } else if (service.price) {
                   navigate(

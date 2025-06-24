@@ -1,6 +1,6 @@
 import "../css/Style_LogIn.css";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import usePostData from "../hooks/usePostData";
 import useData from "../hooks/useData";
 import PhoneInput from "react-phone-input-2";
@@ -10,96 +10,54 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Input from "@mui/material/Input";
 import { useNavigate } from "react-router-dom";
-import countryCityData from "../mockData/countryCityData";
+import { AuthContext } from "../context/AuthContext";
+import { validateFormLogin, validateFormUnique } from "../utils/validateForm";
+import Error from "../components/Error";
 
 const LogIn = () => {
   const navigate = useNavigate();
-  const { data, isLoading, isError, error } = useData("/data/location");
-  const {postData, isLoading : postIsLoading, error : postError } = usePostData();
-  const [activeButton, setActivebutton] = useState("advertiser");
+  const { refetch } = useContext(AuthContext);
+  const [showError, setShowError] = useState(false);
+  const { data, isLoading, isError, error } = useData("/data/locations");
+  const {
+    postData,
+    isLoading: postIsLoading,
+    error: postError,
+  } = usePostData();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     phone: "",
-    password: "",
-    confirmPassword: "",
+    unique: "",
   });
 
   const [formData, setFormData] = useState({
-    userType: "",
+    userType: "advertiser",
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     countryCode: "",
-    // country: "",
     city: "",
     password: "",
     confirmPassword: "",
   });
 
-  const validateForm = () => {
-    let isValid = true;
-
-    const requiredFields = [
-      "firstName",
-      "lastName",
-      "email",
-      "phone",
-      "password",
-      "confirmPassword",
-    ];
-
-    const newErrors = { ...errors };
-
-    requiredFields.forEach((field) => {
-      if (!formData[field]) {
-        newErrors[field] = "* Поле обязательно для заполнения";
-        isValid = false;
-      } else {
-        newErrors[field] = "";
-      }
-    });
-
-    if (formData.password) {
-      if (formData.password.length < 8) {
-        newErrors.password = "* Пароль должен быть больше 8 символов";
-        isValid = false;
-      }
-    }
-
-    if (formData.password && formData.confirmPassword) {
-      if (formData.password != formData.confirmPassword) {
-        newErrors.confirmPassword = "* Пароли не совпадают";
-        isValid = false;
-      }
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    const { isValid } = validateFormLogin(formData, setErrors);
+    if (!isValid) return;
 
     try {
-      const responce = await postData("/auth/login", {
+      await postData("/auth/login", {
         ...formData,
-        userType: activeButton,
       });
-      localStorage.setItem("token", responce.token);
-      // localStorage.setItem("userRole", userRole)
+      await refetch();
       navigate("/");
     } catch (err) {
-      console.log("Ошибка при регистрации", err);
+      setShowError(true)
+      if (validateFormUnique(err, setErrors)) return;
     }
-  };
-
-  const handleButtonClick = (buttonType) => {
-    setActivebutton(buttonType);
   };
 
   const handleChange = (e) => {
@@ -134,14 +92,24 @@ const LogIn = () => {
         <h1>Регистрация</h1>
         <div className="TypeLogIn">
           <button
-            className={activeButton === "advertiser" ? "active" : ""}
-            onClick={() => handleButtonClick("advertiser")}
+            className={formData.userType === "advertiser" ? "active" : ""}
+            name="userType"
+            value="advertiser"
+            onClick={() =>
+              handleChange({
+                target: { name: "userType", value: "advertiser" },
+              })
+            }
           >
             Рекламодатель
           </button>
           <button
-            className={activeButton === "blogger" ? "active" : ""}
-            onClick={() => handleButtonClick("blogger")}
+            className={formData.userType === "blogger" ? "active" : ""}
+            name="userType"
+            value="blogger"
+            onClick={() =>
+              handleChange({ target: { name: "userType", value: "blogger" } })
+            }
           >
             Блогер
           </button>
@@ -151,47 +119,42 @@ const LogIn = () => {
           onSubmit={handleSubmit}
           onKeyDown={handleKeyDown}
         >
-          <div className="input-errors-group">
+          <div>
             <input
               type="text"
               name="firstName"
               placeholder="Имя"
               value={formData.firstName}
               onChange={handleChange}
-              className={errors.firstName ? "error" : ""}
+              required
             />
-            {errors.firstName && (
-              <p className="error-message">{errors.firstName}</p>
-            )}
           </div>
 
-          <div className="input-errors-group">
+          <div>
             <input
               type="text"
               name="lastName"
               placeholder="Фамилия"
               value={formData.lastName}
               onChange={handleChange}
-              className={errors.lastName ? "error" : ""}
+              required
             />
-            {errors.lastName && (
-              <p className="error-message">{errors.lastName}</p>
-            )}
           </div>
 
-          <div className="input-errors-group">
+          <div>
             <input
               type="email"
               name="email"
               placeholder="Электронная почта"
               value={formData.email}
               onChange={handleChange}
-              className={errors.email ? "error" : ""}
+              className={errors.unique ? "error" : ""}
+              required
             />
             {errors.email && <p className="error-message">{errors.email}</p>}
           </div>
 
-          <div className="input-errors-group">
+          <div>
             <PhoneInput
               country={"ru"}
               value={formData.phone}
@@ -208,7 +171,7 @@ const LogIn = () => {
                   }));
                 }
               }}
-              inputClass={errors.phone ? "error" : ""}
+              inputClass={errors.phone || errors.unique ? "error" : ""}
             />
             {errors.phone && <p className="error-message">{errors.phone}</p>}
           </div>
@@ -222,13 +185,11 @@ const LogIn = () => {
               <option value="" disabled>
                 Выберите страну
               </option>
-              {Object.keys(data?.locations || countryCityData).map(
-                (country) => (
-                  <option key={country} value={country}>
-                    {country}
-                  </option>
-                )
-              )}
+              {Object.keys(data?.locations || []).map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -239,10 +200,7 @@ const LogIn = () => {
                   {" "}
                   Выберите город
                 </option>
-                {(
-                  data?.locations?.[formData.country] ||
-                  countryCityData[formData.country]
-                ).map((city) => (
+                {(data?.locations?.[formData.country] || []).map((city) => (
                   <option key={city} value={city}>
                     {city}
                   </option>
@@ -259,7 +217,7 @@ const LogIn = () => {
               value={formData.password}
               onChange={handleChange}
               disableUnderline
-              className={errors.password ? "error" : ""}
+              required
             />
             <IconButton
               className="password-icon"
@@ -286,6 +244,7 @@ const LogIn = () => {
               onChange={handleChange}
               disableUnderline
               className={errors.confirmPassword ? "error" : ""}
+              required
             />
             <IconButton
               className="password-icon"
@@ -303,6 +262,8 @@ const LogIn = () => {
             )}
           </div>
 
+          {errors.unique && <p className="error-message">{errors.unique}</p>}
+
           <p className="logIn-text">
             {" "}
             Нажимая на кнопку "Зарегистрироваться", вы соглашаетесь с
@@ -312,6 +273,9 @@ const LogIn = () => {
         </form>
         <Link to="/auth/signup">Уже есть аккаунт? Войти</Link>
       </div>
+      {showError && (
+        <Error onClose={() => setShowError(false)} style={{ top: "7px" }}/>
+      )}
     </div>
   );
 };

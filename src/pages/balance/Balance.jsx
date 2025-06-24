@@ -22,6 +22,8 @@ const Balance = () => {
   const { user, refetch: refetchUserData } = useContext(AuthContext);
   const location = useLocation();
 
+  const role = localStorage.getItem("activeRole")
+
   useEffect(() => {
     const state = location.state;
     if (state && typeof state.password !== "undefined") {
@@ -92,7 +94,7 @@ const Balance = () => {
             Снять
           </button>
         </div>
-        {(user?.role === "advertiser") && (
+        {(role === "advertiser" || user?.role === "advertiser") && (
           <input
             type="text"
             className="frozen_balance"
@@ -134,4 +136,3 @@ const Balance = () => {
 
 export default Balance;
 
-//

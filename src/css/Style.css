@@ -26,10 +26,7 @@ button:active {
 
 body {
   position: relative;
-  /* margin: 0;
-  padding: 0;
-  height: 100%; */
-  /* overflow: hidden; */
+  min-height: 100%;
 }
 
 body::before {
@@ -93,6 +90,7 @@ input.error {
   border: 1px solid #e6a5b0;
   box-shadow: 0 0 5px rgba(230, 165, 176, 0.5);
   outline: none;
+
 }
 
 input {
@@ -119,10 +117,6 @@ input[type="date"] {
   padding: 0 15px;
   font-size: 15px !important;
   background-color: #f3f4fc !important;
-
-  /* font-family: "JejuMyeongjo", sans-serif !important; */
-  /* color: black !important; */
-  /* font-weight: 100 !important; */
 }
 
 .MuiInput-root.error .MuiInput-input {
@@ -172,19 +166,6 @@ select {
   background-size: 12px;
 }
 
-/* textarea::-webkit-scrollbar {
-  width: 5px;
-}
-
-textarea::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-textarea::-webkit-scrollbar-thumb {
-  background-color: #a5b0e6;
-  border-radius: 10px;
-  border: 1px solid transparent; 
-} */
 
 textarea::-webkit-scrollbar {
   width: 0px;
@@ -195,4 +176,61 @@ textarea::-webkit-scrollbar {
   font-size: 13px;
   color: red;
   margin-left: 8px;
+}
+
+input[type="checkbox"] {
+  position: absolute; /* убирает из потока документа */
+  opacity: 0;         /* делает невидимым */
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  pointer-events: none; /* чтобы не мешал кликам */
+}
+
+.checkmark {
+  flex-shrink: 0;
+ position: relative;
+ top: 0;
+ left: 0;
+ background-color: #ccc;
+ border-radius: 5px;
+ width: 18px;
+ height: 18px;
+}
+
+input:checked ~ .checkmark {
+ box-shadow: 3px 3px 0px rgb(183, 183, 183);
+ transition: all 0.2s;
+ opacity: 1;
+ background-image: linear-gradient(45deg, rgb(100, 61, 219) 0%, rgb(217, 21, 239) 100%);
+
+}
+
+input ~ .checkmark {
+ transition: all 0.2s;
+ opacity: 1;
+ box-shadow: 1px 1px 0px rgb(183, 183, 183);
+}
+
+.checkmark:after {
+ content: "";
+ position: absolute;
+ opacity: 0;
+ transition: all 0.2s;
+}
+
+input:checked ~ .checkmark:after {
+ opacity: 1;
+ transition: all 0.2s;
+}
+
+.checkmark:after {
+ left: 6px;
+ top: 2px;
+ width: 0.25em;
+ height: 0.5em;
+ border: solid white;
+ border-width: 0 0.15em 0.15em 0;
+ transform: rotate(45deg);
 }

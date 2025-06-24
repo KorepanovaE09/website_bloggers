@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
-const useData = (endpoint, useAuth = true) => {
+const useData = (endpoint, options = {}) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(null);
 
   const API_URL = process.env.REACT_APP_API_URL;
+
+  const { page, limit, append = false, params = {} } = options;
 
   const fetchData = useCallback(
     async (signal) => {
@@ -18,16 +20,33 @@ const useData = (endpoint, useAuth = true) => {
       setError(null);
 
       try {
-        const config = { signal, withCredentials: true };
+        const config = {
+          signal,
+          withCredentials: true,
+          
+          // создаем новый объект, копируем все свойства params и добавляем page, limit
+          params: page && limit ? { ...params, page, limit } : params,
+        };
+
         const response = await axios.get(url, config);
-        setData(response.data);
-        return response.data;
+        const result = response.data;
+
+        if (append) {
+          setData(prev => (Array.isArray(prev) ? [...prev, ...result] : result))
+        } else {
+          setData(result)
+        }
+
+        return result;
       } catch (err) {
+        setIsError(true)
+        setError(err)
+        console.log("Ошибка GET запроса");
       } finally {
         setIsLoading(false);
       }
     },
-    [endpoint, useAuth, API_URL]
+    [endpoint, API_URL, page, limit, append, JSON.stringify(params)]
   );
 
   useEffect(() => {

@@ -20,6 +20,10 @@
   padding: 30px;
   margin: 20px 0;
   min-height: 240px;
+  width: 370px;
+
+  box-sizing: border-box;
+  word-wrap: break-word;
 }
 
 .blogger-card-description{
@@ -47,7 +51,6 @@
 .blogger_card_head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .blogger_card_head h2{
@@ -86,7 +89,7 @@
 
 .blogger-card-network{
   display: flex;
-  gap: 30px;
+  gap: 45px;
   align-items: center;
   justify-content: center;
   margin: 20px 0;

@@ -1,18 +1,18 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Header from "./components/Header-blogger";
+import AuthProvider from "./context/AuthContext.jsx";
+import Header from "./components/Header";
 import Bloggers from "./pages/Bloggers";
 import BloggerDetails from "./pages/BloggerDetails";
-import Balance from "./pages/Balance";
 import Profile from "./components/Profile_settings";
-import Profile_blogger from "./pages/Settings_blogger";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import Error from "./pages/Error";
 import Channel from "./pages/Channel";
 import AddChannel from "./pages/AddСhannel";
-import Orders from "./pages/Orders";
+import Orders from "./components/orders/Orders.jsx";
 import Form_order from "./pages/Form-new-order";
 import ChangePassword from "./pages/ChangePassword";
+import Balance from "./pages/balance/Balance.jsx";
 
 const router = createBrowserRouter([
   {
@@ -49,7 +49,6 @@ const router = createBrowserRouter([
       <>
         <Header />
         <Profile />
-        {/* <Profile_advertiser/> */}
       </>
     ),
   },
@@ -57,7 +56,7 @@ const router = createBrowserRouter([
     path: "/auth/signup",
     element: (
       <>
-        <SignUp />
+        <SignUp />     
       </>
     ),
   },
@@ -109,15 +108,19 @@ const router = createBrowserRouter([
     path: "/change-password",
     element: (
       <>
-      <Header/>
-      <ChangePassword/>
+        <Header />
+        <ChangePassword />
       </>
-    )
-  }
+    ),
+  },
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }
 
 export default App;

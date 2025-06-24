@@ -4,10 +4,6 @@ header {
   background-color: rgba(255, 255, 255, 0.5);
   height: 75px;
   border-bottom: 1px solid #a5b0e6;
-
-  /* position: sticky; */
-  /* top: 0;
-  z-index: 1000; */
 }
 
 .header-blogger-left {
@@ -52,10 +48,6 @@ header {
   transform: scaleX(1);
 }
 
-/* .btn-header-left:hover::after{
-  opacity: 1;
-  transform: scaleX(1);
-} */
 
 header img.img_balance {
   width: 21px;
@@ -76,12 +68,6 @@ header img.img_balance {
   transform: translateY(1px);
   display: inline-block;
 }
-/* .balance-amount {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  font-size: 16px;
-} */
 
 .header_right button {
   border-radius: 25px;

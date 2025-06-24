@@ -38,6 +38,7 @@ const usePostData = (useAuth = true) => {
         "Произошла ошибка при выполнении запроса";
       err.customMessage = errorMessage;
       setError(errorMessage);
+      console.log("Ошибка post запроса", err)
       throw err;
     } finally {
       setIsLoading(false);

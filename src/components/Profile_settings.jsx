@@ -174,19 +174,6 @@ const Profile = () => {
               </div>
 
               <div className="Profile_exit">
-                {/* <Link to="/auth/signup"> */}
-                {/* <input
-                  type="text"
-                  className={
-                    errors.unique || errors.user_nickname ? "error" : ""
-                  }
-                  placeholder="Никнейм"
-                  value={profileData.user_nickname}
-                  onChange={(e) =>
-                    handleChange("user_nickname", e.target.value)
-                  }
-                  required
-                /> */}
                 <div className="username-conteiner">
                   <input
                     className={
@@ -251,13 +238,10 @@ const Profile = () => {
               </div>
 
               <div className="input-errors-group">
-                {/* <p>{profileData?.user_phone_code}</p>
-              <p>{profileData.user_phone}</p> */}
                 {profileData.user_phone && (
                   <PhoneInput
                     country={profileData?.user_phone_code}
                     value={profileData.user_phone}
-                    // value="79012653281"
                     onChange={(phone) => handleChange("user_phone", phone)}
                     className={
                       errors.unique || errors.user_phone ? "error" : ""
@@ -291,7 +275,6 @@ const Profile = () => {
                   value={profileData?.user_country}
                   onChange={(e) => {
                     handleChange("user_country", e.target.value);
-                    // setSelectedSity("");
                   }}
                 >
                   <option value="" disabled>

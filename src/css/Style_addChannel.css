@@ -11,6 +11,10 @@
   z-index: 1000;
 }
 
+.modal-addChannel .error-message {
+  width: 85%;
+}
+
 .modal-conteiner-addChannel {
   background-color: white;
   border-radius: 10px;
@@ -21,8 +25,6 @@
   width: 100%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
-  /* display: flex;
-  flex-direction: column; */
 }
 
 .dropdown-network-content {
@@ -66,7 +68,6 @@
   width: 170px;
   padding: 15px 15px 1px;
   margin-top: 15px;
-  /* margin-bottom: 20px; */
 }
 
 .dropdown-network-img {
@@ -84,8 +85,7 @@
 
 .addChannel-name {
   display: flex;
-  gap: 15px;
-  /* margin: 15px 0; */
+  gap: 47px;
 }
 
 .addChannel-name input {
@@ -102,7 +102,6 @@
   border: 1px solid #a5b0e6;
   outline: none;
   padding: 10px;
-  /* margin-bottom: 15px; */
 }
 
 .addChannel-descroption textarea:focus {
@@ -123,121 +122,7 @@
   justify-content: center;
 }
 
-/*
-
-
-
-
-
-.dropdown-network-btn {
-  width: 200px;
-  height: 40px;
-  border-radius: 30px;
-  border: 2px solid #a5b0e6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px 0 20px;
-  background-color: #fff;
+.addChannel-name .input_profile_url{
+  width: 350px;
 }
 
-.dropdown-list-network {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  width: 170px;
-  padding: 15px 15px 1px;
-  margin-bottom: 20px;
-}
-
-.dropdown-list-network li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  cursor: pointer;
-}
-
-.dropdown-network-img {
-  width: 20px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.addChannel-name input {
-  width: 240px;
-  height: 40px;
-  /* margin-top: 20px; */
-/* padding: 0 10px;
-  border-radius: 10px;
-}
-
-.addChannel-descroption input {
-  width: 86%;
-  height: 150px;
-
-  border-radius: 10px;
-  margin-top: 20px;
-  text-align: start;
-}
-
-.addChannel-categoies select {
-  width: 260px;
-  height: 40px;
-  padding: 0 10px;
-  margin: 20px 0 0;
-
-  border-radius: 10px;
-  border: 1px solid #f6a8cd;
-  outline: none;
-}
-
-.modal-addChannel-gender-btn button {
-  width: 100px;
-  height: 30px;
-  border-radius: 30px;
-  border: none;
-  border: 1px solid #a5b0e6;
-  background-color: #fff;
-  margin-right: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.modal-addChannel-gender-btn button.selected-gender {
-  background-color: #f6a8cd;
-  border: 1px solid #f6a8cd;
-}
-
-.modal-addChannel-country-city input {
-  height: 40px;
-  width: 250px;
-  border-radius: 10px;
-  padding-left: 10px;
-}
-
-.save-add-channel {
-  width: 150px;
-  height: 40px;
-  border-radius: 30px;
-  border: none;
-  align-self: center;
-  margin: 30px 0 10px;
-  background-color: #a5b0e6;
-}
-
-.save-add-channel:hover {
-  background-color: #a5b0e6;
-  filter: brightness(0.9);
-}
-
-.modal-addChannel p {
-  margin: 15px 0;
-}
-
-.modal-addChannel-country-city {
-  display: flex;
-  gap: 30px;
-}
-
-.modal-addChannel button:not(.save-add-channel, .close-modal):hover {
-  background-color: #f6a8cd;
-  border: 1px solid #f6a8cd;
-} */

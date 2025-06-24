@@ -4,7 +4,7 @@ const ordersData = [
     network: "instagram",
     channelName: "Math Expert",
     title: "Реклама в Instagram",
-    status: "Ждет подтверждения", // 'waiting', 'confirmed', 'rejected', 'completed'
+    status: "Ждёт подтверждения", // 'waiting', 'confirmed', 'rejected', 'completed'
     description:
       "Рекламная интеграция на аккаунте в Instagram для продвижения бренда. Включает в себя публикацию поста и истории.",
     bloggerComments:
@@ -16,7 +16,7 @@ const ordersData = [
   {
     id: 2,
     title: "Господи спаси и помоги",
-    status: "Подтвержден",
+    status: "В работе",
     description: "Описание заказа 2",
     bloggerComments: "Готов взяться за работу",
     startDate: "2025-04-20",

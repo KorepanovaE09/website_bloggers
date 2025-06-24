@@ -36,9 +36,7 @@ const UserRole = ({ user, activeRole, setActiveRole, refetch }) => {
   useEffect(() => {
     if (user?.role === "blogger") {
       setActiveRole(localStorage.getItem("activeRole") || "blogger");
-      // navigate("/orders")
     } else if (user?.role === "advertiser") {
-      // navigate("/");
     }
   }, [user?.role]);
 

@@ -4,13 +4,25 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import usePostData from "../hooks/usePostData";
 import Loader from "../components/Loader";
 import { useConfirmModal } from "../context/ConfirmModalContext";
+import { validateForm } from "../utils/validateForm";
+import Success from "../components/Success";
+import Error from "../components/Error";
+import Info from "../components/Info";
 
 const Form_order = () => {
   const navigate = useNavigate();
   const { postData, isLoading, error } = usePostData();
   const { showConfirmModal } = useConfirmModal();
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [searchParams] = useSearchParams();
   const [order, setOrder] = useState({
+    title: "",
+    deadlineEnd: "",
+    description: "",
+  });
+  const [errors, setErrors] = useState({
     title: "",
     deadlineEnd: "",
     description: "",
@@ -18,8 +30,7 @@ const Form_order = () => {
 
   const today = new Date().toISOString().split("T")[0];
   const price = searchParams.get("price");
-  // const price = parseInt(searchParams.get("price"), 10);
-  const priceListTypeId = searchParams.get("service");
+  const pricelist_id = searchParams.get("service");
   const receiverId = searchParams.get("bloggerId");
 
   const handleChange = (e) => {
@@ -43,12 +54,13 @@ const Form_order = () => {
       await postData("/orders/create-order", {
         ...order,
         price,
-        priceListTypeId,
+        pricelist_id,
         receiverId,
       });
-      navigate("/orders");
+      setTimeout(() => navigate("/orders"), 3000);
+      setShowSuccess(true);
     } catch (err) {
-      console.log("Ошибка при отпрвке формы заказа", err);
+      setShowError(true);
     }
   };
 
@@ -61,37 +73,53 @@ const Form_order = () => {
       <div className="form-order-conteiner">
         <h1>ФОРМА ЗАКАЗА</h1>
         <div className="form-order-content">
-          <div className="form-order-input">
-            <input
-              className="form-order-name"
-              name="title"
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleModalSaveChange();
+            }}
+          >
+            <div className="form-order-input">
+              <input
+                className="form-order-name"
+                name="title"
+                type="text"
+                placeholder="Название заказа"
+                onChange={handleChange}
+                required
+              ></input>
+              <input
+                className="form-order-date"
+                name="deadlineEnd"
+                type="date"
+                onChange={handleChange}
+                min={today}
+                required
+              />
+            </div>
+            <textarea
               type="text"
-              placeholder="Название заказа"
+              name="description"
+              placeholder="Описание заказа"
               onChange={handleChange}
-            ></input>
-            <input
-              className="form-order-date"
-              name="deadlineEnd"
-              type="date"
-              onChange={handleChange}
-              min={today}
-            />
-          </div>
+              required
+            ></textarea>
 
-          <textarea
-            type="text"
-            name="description"
-            placeholder="Описание заказа"
-            onChange={handleChange}
-          ></textarea>
-
-          <div className="save-order">
-            <button className="save-order-btn" onClick={handleModalSaveChange}>
-              Отправить заявку {price && `(${price} руб.)`}
-            </button>
-          </div>
+            <div className="save-order">
+              <button className="save-order-btn" type="submit">
+                Отправить заявку {price && `(${price} руб.)`}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
+      {showSuccess && (
+        <Success title="Заказ создан!" onClose={() => setShowSuccess(false)} />
+      )}
+      {showError && (
+        <Error title={errorMessage} onClose={() => setShowError(false)} />
+      )}
+      <Info title="Пожалуйста, не забудьте пополнить счёт — так блогер точно увидит ваш заказ!"/>
     </div>
   );
 };

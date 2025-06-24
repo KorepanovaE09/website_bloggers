@@ -1,16 +1,13 @@
 .my-channels-conteiner {
-  /* height: 100vh; */
   overflow: auto;
 }
 
 .my-channels-conteiner-header {
   padding: 40px;
-  /* overflow: auto; */
   display: flex;
   justify-content: space-between;
 
   align-items: center;
-  /* z-index: 1; */
 }
 
 .plus-icon {

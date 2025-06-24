@@ -4,6 +4,9 @@
   justify-content: center;
   height: 100vh;
   margin: 0;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
 }
 
 .SignUp {
@@ -80,4 +83,9 @@
 .password-input {
   position: relative;
   width: 316px;
+}
+
+.progress-container{
+  position: absolute;
+  bottom: 70px;
 }

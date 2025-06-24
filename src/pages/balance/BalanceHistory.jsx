@@ -13,8 +13,6 @@ const BalanceHistory = ({data}) => {
           data.map((tx, index) => (
             <tr key={index}>
               <td>
-                {/* {new Date(tx.transaction_created_at).toLocaleString("ru-RU")} */}
-
                 {new Date(tx.transaction_created_at).toLocaleDateString()}
               </td>
               <td>{tx.transaction_amount}</td>

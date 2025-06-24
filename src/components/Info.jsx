@@ -3,15 +3,6 @@ import "../css/Style_info.css";
 
 const Info = ({ title, onClose, style }) => {
   const [isVisible, setIsVisible] = useState(true);
- 
-  // useEffect(() => {
-  //   if (!isVisible) {
-  //     const delay = setTimeout(() => {
-  //       if (onClose) onClose();
-  //     }, 300);
-  //     return () => clearTimeout(delay);
-  //   }
-  // }, [isVisible, onClose]);
 
   if (!isVisible) {
     return null;

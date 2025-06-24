@@ -22,7 +22,6 @@ const Error = ({ title, onClose, style }) => {
   }
 
   return (
-    // <div className={`error ${!isVisible ? "fade-out" : ""}`}>
       <div className="error-container" style={style}>
         <div className="error__icon">
           <svg

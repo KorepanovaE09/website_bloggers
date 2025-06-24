@@ -158,26 +158,6 @@ const BloggerFilter = ({ closeModal, updateFilter }) => {
             ))}
           </select>
 
-          {/* <p>Пол блогера</p>
-          <div className="filter-gender">
-            <button
-              className={formData.gender === "Мужской" ? "active" : ""}
-              onClick={() =>
-                setFormData((prev) => ({ ...prev, gender: "Мужской" }))
-              }
-            >
-              Мужской
-            </button>
-            <button
-              className={formData.gender === "Женский" ? "active" : ""}
-              onClick={() =>
-                setFormData((prev) => ({ ...prev, gender: "Женский" }))
-              }
-            >
-              Женский
-            </button>
-          </div> */}
-
           <p>Страна</p>
           <select
             name="country"

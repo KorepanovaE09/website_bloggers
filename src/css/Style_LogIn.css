@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   margin: 0;
 }
 
@@ -146,4 +145,8 @@
 
 .input-errors-group {
   width: 100%;
+}
+
+.LogIn .react-tel-input {
+  width: auto;
 }
